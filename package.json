@@ -1,0 +1,30 @@
+{
+  "name": "dust2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.15",
+    "mime-types": "^2.1.26",
+    "mkdirp": "^0.5.1",
+    "moleculer": "^0.13.12",
+    "moleculer-web": "^0.8.5",
+    "nats": "^1.3.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/woolfsystems/dust2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/woolfsystems/dust2/issues"
+  },
+  "homepage": "https://github.com/woolfsystems/dust2#readme"
+}
