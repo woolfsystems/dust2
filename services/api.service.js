@@ -2,16 +2,32 @@ const fs = require("fs");
 const path = require("path");
 const { ForbiddenError, UnAuthorizedError, ERR_NO_TOKEN, ERR_INVALID_TOKEN } = require("moleculer-web/src/errors");
 const ApiGateway = require("moleculer-web");
+const SocketIOService = require("moleculer-io");
 const { MoleculerError } = require("moleculer").Errors;
 
 module.exports = {
-	mixins: ApiGateway,
+	mixins: [ApiGateway, SocketIOService],
 	settings: {
 		port: 4000,
 		ip: "0.0.0.0",
 		https: {
 			key: fs.readFileSync(path.join(__dirname, "../ssl/key.pem")),
 			cert: fs.readFileSync(path.join(__dirname, "../ssl/cert.pem"))
+		},
+		io: {
+			namespaces: {
+				'/': {
+					events: {
+						'call': {
+							mappingPolicy: 'restrict',
+							aliases: {
+								'add': 'math.add'
+							},
+							callOptions: {}
+						}
+					}
+				}
+			}
 		},
 		//http2: true,
 		cors: {
