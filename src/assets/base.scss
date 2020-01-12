@@ -1,0 +1,116 @@
+@use 'reset';
+@use 'fonts';
+
+h1,
+h2,
+h3,
+h4{
+    font-family: 'Montserrat', sans-serif;
+}
+h1{
+    font-size: 2.5em;
+    color: #222;
+}
+h2{
+    font-size: 1.5em;
+    color: #333;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    background-color: #eee;
+    color: #111;
+
+    &> section {
+        display: grid;
+        grid:
+            "heading" min-content
+            "content" auto
+            "base" min-content /
+            auto;
+        width: 1024px;
+        min-height: 100vh;
+        margin: 0 auto;
+        grid-gap: 1em;
+        background-color: #f7f4fd;
+        padding: 2em 1em;
+        box-shadow: 0 0 8px -2px black;
+
+        &> hgroup {
+            grid-area: heading;
+        }
+        &> section {
+            display: grid;
+            grid: auto-flow min-content / auto;
+            grid-area: content;
+            grid-gap: 0.5em;
+
+            &> article {
+                display: grid;
+                gap: 1em;
+                flex-flow: column;
+                flex: 2 1 auto;
+                grid: "main aside" auto /
+                    2fr 1fr;
+            }
+        }
+        &> footer {
+            grid-area: base;
+        }
+    }
+}
+
+article {
+    &> p {
+        grid-column-start: 1;
+        grid-column-end: 1;
+        text-align: justify;
+    }
+    &> figure {
+        min-width: 30%;
+        width: 100%;
+        margin-top: 0.3em;
+    }
+}
+
+figure {
+    &> img{
+        width: 100%;
+    }
+    &> figcaption {
+        font-size: 0.5em;
+        margin-top: 0.5em;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    body {
+        &> section {
+            width: 1280px;
+            display: grid;
+            grid-template:
+                "heading content" auto
+                "base base" min-content /
+                max-content auto;
+
+            &> section {
+            
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    body{
+        &> section {
+            width: 100vw;
+
+            &> section {
+                &> article {
+                    display: flex;
+                }
+            }
+        }
+    }
+}

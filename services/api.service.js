@@ -152,7 +152,7 @@ module.exports = {
 		],
 
 		assets: {
-			folder: "./static/www",
+			folder: "./dist",
 			options: {}
 		},
 
@@ -162,7 +162,7 @@ module.exports = {
 			res.end("Global error: " + err.message);
 		},
 
-		log4XXResponses: false,
+		log4XXResponses: true,
 	},
 	events: {
 		"node.broken"(node) {
