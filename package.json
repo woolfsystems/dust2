@@ -18,7 +18,7 @@
     "mime-types": "^2.1.26",
     "mkdirp": "^0.5.1",
     "moleculer": "^0.13.12",
-    "moleculer-axios": "^0.1.2",
+    "moleculer-http-client": "^0.3.0",
     "moleculer-io": "^1.1.3",
     "moleculer-web": "^0.8.5",
     "nats": "^1.3.2",
