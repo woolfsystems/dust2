@@ -1,11 +1,14 @@
 "use strict";
 
-const { ServiceBroker } = require("moleculer");
+const Axios = require('moleculer-axios')
+const { ServiceBroker } = require('moleculer')
 
 const broker = new ServiceBroker({
 	transporter: "NATS",
 	metrics: true
 });
 
-broker.loadServices();
-broker.start();
+
+broker.loadServices()
+broker.createService(Axios)
+broker.start()

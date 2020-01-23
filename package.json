@@ -10,17 +10,25 @@
   },
   "dependencies": {
     "assets": "^3.0.1",
+    "create-ssl-certificate": "^3.0.1",
+    "d3": "^5.15.0",
+    "d3-scale": "^3.2.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "mime-types": "^2.1.26",
     "mkdirp": "^0.5.1",
     "moleculer": "^0.13.12",
+    "moleculer-axios": "^0.1.2",
     "moleculer-io": "^1.1.3",
     "moleculer-web": "^0.8.5",
     "nats": "^1.3.2",
-    "serve-static": "^1.14.1"
+    "serve-static": "^1.14.1",
+    "socket.io-client": "^2.3.0",
+    "winston": "^3.2.1",
+    "winston-pretty-console": "^0.1.1"
   },
   "devDependencies": {
+    "core-js": "^3",
     "cssnano": "^4.1.10",
     "sass": "^1.24.4"
   },

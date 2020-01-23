@@ -10,20 +10,26 @@ module.exports = {
 	settings: {
 		port: 4000,
 		ip: "0.0.0.0",
-		https: {
-			key: fs.readFileSync(path.join(__dirname, "../ssl/key.pem")),
-			cert: fs.readFileSync(path.join(__dirname, "../ssl/cert.pem"))
-		},
+		// https: {
+		// 	key: fs.readFileSync(path.join(__dirname, "../ssl/key.pem")),
+		// 	cert: fs.readFileSync(path.join(__dirname, "../ssl/cert.pem"))
+		// },
 		io: {
 			namespaces: {
 				'/': {
 					events: {
 						'call': {
-							mappingPolicy: 'restrict',
-							aliases: {
-								'add': 'math.add'
-							},
+							whitelist: [
+								'math.add'
+							],
 							callOptions: {}
+						},
+						'clientCall': {
+							whitelist: [
+								'postcode.*',
+								'client.*',
+								'$node.*'
+							]
 						}
 					}
 				}
@@ -167,6 +173,14 @@ module.exports = {
 	events: {
 		"node.broken"(node) {
 			this.logger.warn(`The ${node.id} node is disconnected!`);
+		},
+		"**"(payload, sender, event) {
+			if (this.io)
+				this.io.emit("event", {
+					sender,
+					event,
+					payload
+				});
 		}
 	},
 	methods: {
