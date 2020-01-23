@@ -1,16 +1,29 @@
 module.exports = {
-	name: "postcode",
+	name: 'postcode',
+	dependencies: ['axios'],
 	actions: {
-		async lookup(ctx) {
-			//`${getSettings().backofficeEndpoint}${getSettings().apiPostcodeLookup}${_data.postcode}`
-			//return Number(ctx.params.a) + Number(ctx.params.b);
-			return await ctx.broker
-				.call("axios.get", {url: "https://httpbin.org/status/200"})
-				.then(response => {
-					ctx.broker.logger.info(response)
-					return response.data
-				})
-				// .catch(broker.logger.error);
+		lookup: {
+			cache: {
+				keys: [
+					'postcode',
+					'token'
+				]
+			},
+			params: {
+				postcode: 'string',
+				token: 'string'
+			},
+			async handler(ctx) {
+				console.log('ctx',ctx.meta)
+				//`${getSettings().backofficeEndpoint}${getSettings().apiPostcodeLookup}${_data.postcode}`
+				return await ctx.broker
+					.call('axios.get', {
+						url: 'https://httpbin.org/status/200'
+					}).then(response => {
+						ctx.broker.logger.info(response.data)
+						return response.data
+					})
+			}
 		}
 	}
 }

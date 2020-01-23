@@ -117,7 +117,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"../../../../../usr/lib/node_modules/parcel/src/builtins/bundle-url.js":[function(require,module,exports) {
+})({"../../../.nvm/versions/node/v12.14.1/lib/node_modules/parcel/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -149,7 +149,7 @@ function getBaseURL(url) {
 
 exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
-},{}],"../../../../../usr/lib/node_modules/parcel/src/builtins/css-loader.js":[function(require,module,exports) {
+},{}],"../../../.nvm/versions/node/v12.14.1/lib/node_modules/parcel/src/builtins/css-loader.js":[function(require,module,exports) {
 var bundle = require('./bundle-url');
 
 function updateLink(link) {
@@ -184,12 +184,12 @@ function reloadCSS() {
 }
 
 module.exports = reloadCSS;
-},{"./bundle-url":"../../../../../usr/lib/node_modules/parcel/src/builtins/bundle-url.js"}],"assets/base.scss":[function(require,module,exports) {
+},{"./bundle-url":"../../../.nvm/versions/node/v12.14.1/lib/node_modules/parcel/src/builtins/bundle-url.js"}],"assets/base.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"/home/wintermute/workspace/dust2/src/assets/fonts/Montserrat/JTUSjIg1_i6t8kCHKm459Wlhyw.woff2":[["JTUSjIg1_i6t8kCHKm459Wlhyw.454ec64a.woff2","assets/fonts/Montserrat/JTUSjIg1_i6t8kCHKm459Wlhyw.woff2"],"assets/fonts/Montserrat/JTUSjIg1_i6t8kCHKm459Wlhyw.woff2"],"/home/wintermute/workspace/dust2/src/assets/fonts/Montserrat/JTURjIg1_i6t8kCHKm45_dJE3gfD_u50.woff2":[["JTURjIg1_i6t8kCHKm45_dJE3gfD_u50.44b1daa9.woff2","assets/fonts/Montserrat/JTURjIg1_i6t8kCHKm45_dJE3gfD_u50.woff2"],"assets/fonts/Montserrat/JTURjIg1_i6t8kCHKm45_dJE3gfD_u50.woff2"],"/home/wintermute/workspace/dust2/src/assets/fonts/Open_Sans/mem8YaGs126MiZpBA-UFW50bbck.woff2":[["mem8YaGs126MiZpBA-UFW50bbck.98c67a48.woff2","assets/fonts/Open_Sans/mem8YaGs126MiZpBA-UFW50bbck.woff2"],"assets/fonts/Open_Sans/mem8YaGs126MiZpBA-UFW50bbck.woff2"],"/home/wintermute/workspace/dust2/src/assets/fonts/Open_Sans/mem8YaGs126MiZpBA-UFVZ0b.woff2":[["mem8YaGs126MiZpBA-UFVZ0b.3996f2d0.woff2","assets/fonts/Open_Sans/mem8YaGs126MiZpBA-UFVZ0b.woff2"],"assets/fonts/Open_Sans/mem8YaGs126MiZpBA-UFVZ0b.woff2"],"_css_loader":"../../../../../usr/lib/node_modules/parcel/src/builtins/css-loader.js"}],"../node_modules/parseuri/index.js":[function(require,module,exports) {
+},{"/home/wintermute/workspace/dust2/src/assets/fonts/Montserrat/JTUSjIg1_i6t8kCHKm459Wlhyw.woff2":[["JTUSjIg1_i6t8kCHKm459Wlhyw.454ec64a.woff2","assets/fonts/Montserrat/JTUSjIg1_i6t8kCHKm459Wlhyw.woff2"],"assets/fonts/Montserrat/JTUSjIg1_i6t8kCHKm459Wlhyw.woff2"],"/home/wintermute/workspace/dust2/src/assets/fonts/Montserrat/JTURjIg1_i6t8kCHKm45_dJE3gfD_u50.woff2":[["JTURjIg1_i6t8kCHKm45_dJE3gfD_u50.44b1daa9.woff2","assets/fonts/Montserrat/JTURjIg1_i6t8kCHKm45_dJE3gfD_u50.woff2"],"assets/fonts/Montserrat/JTURjIg1_i6t8kCHKm45_dJE3gfD_u50.woff2"],"/home/wintermute/workspace/dust2/src/assets/fonts/Open_Sans/mem8YaGs126MiZpBA-UFW50bbck.woff2":[["mem8YaGs126MiZpBA-UFW50bbck.98c67a48.woff2","assets/fonts/Open_Sans/mem8YaGs126MiZpBA-UFW50bbck.woff2"],"assets/fonts/Open_Sans/mem8YaGs126MiZpBA-UFW50bbck.woff2"],"/home/wintermute/workspace/dust2/src/assets/fonts/Open_Sans/mem8YaGs126MiZpBA-UFVZ0b.woff2":[["mem8YaGs126MiZpBA-UFVZ0b.3996f2d0.woff2","assets/fonts/Open_Sans/mem8YaGs126MiZpBA-UFVZ0b.woff2"],"assets/fonts/Open_Sans/mem8YaGs126MiZpBA-UFVZ0b.woff2"],"_css_loader":"../../../.nvm/versions/node/v12.14.1/lib/node_modules/parcel/src/builtins/css-loader.js"}],"../node_modules/parseuri/index.js":[function(require,module,exports) {
 /**
  * Parses an URI
  *
@@ -662,7 +662,7 @@ function setup(env) {
 
 module.exports = setup;
 
-},{"ms":"../node_modules/ms/index.js"}],"../../../../../usr/lib/node_modules/parcel/node_modules/process/browser.js":[function(require,module,exports) {
+},{"ms":"../node_modules/ms/index.js"}],"../../../.nvm/versions/node/v12.14.1/lib/node_modules/parcel/node_modules/process/browser.js":[function(require,module,exports) {
 
 // shim for using process in browser
 var process = module.exports = {}; // cached from whatever global is present so that test runners that stub it
@@ -1048,7 +1048,7 @@ formatters.j = function (v) {
     return '[UnexpectedJSONParseError]: ' + error.message;
   }
 };
-},{"./common":"../node_modules/debug/src/common.js","process":"../../../../../usr/lib/node_modules/parcel/node_modules/process/browser.js"}],"../node_modules/socket.io-client/lib/url.js":[function(require,module,exports) {
+},{"./common":"../node_modules/debug/src/common.js","process":"../../../.nvm/versions/node/v12.14.1/lib/node_modules/parcel/node_modules/process/browser.js"}],"../node_modules/socket.io-client/lib/url.js":[function(require,module,exports) {
 
 /**
  * Module dependencies.
@@ -1670,7 +1670,7 @@ function localstorage() {
     return window.localStorage;
   } catch (e) {}
 }
-},{"./debug":"../node_modules/socket.io-client/node_modules/socket.io-parser/node_modules/debug/src/debug.js","process":"../../../../../usr/lib/node_modules/parcel/node_modules/process/browser.js"}],"../node_modules/component-emitter/index.js":[function(require,module,exports) {
+},{"./debug":"../node_modules/socket.io-client/node_modules/socket.io-parser/node_modules/debug/src/debug.js","process":"../../../.nvm/versions/node/v12.14.1/lib/node_modules/parcel/node_modules/process/browser.js"}],"../node_modules/component-emitter/index.js":[function(require,module,exports) {
 
 /**
  * Expose `Emitter`.
@@ -1842,7 +1842,7 @@ module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],"../../../../../usr/lib/node_modules/parcel/node_modules/base64-js/index.js":[function(require,module,exports) {
+},{}],"../../../.nvm/versions/node/v12.14.1/lib/node_modules/parcel/node_modules/base64-js/index.js":[function(require,module,exports) {
 'use strict'
 
 exports.byteLength = byteLength
@@ -1996,7 +1996,7 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],"../../../../../usr/lib/node_modules/parcel/node_modules/ieee754/index.js":[function(require,module,exports) {
+},{}],"../../../.nvm/versions/node/v12.14.1/lib/node_modules/parcel/node_modules/ieee754/index.js":[function(require,module,exports) {
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = (nBytes * 8) - mLen - 1
@@ -2082,14 +2082,14 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],"../../../../../usr/lib/node_modules/parcel/node_modules/isarray/index.js":[function(require,module,exports) {
+},{}],"../../../.nvm/versions/node/v12.14.1/lib/node_modules/parcel/node_modules/isarray/index.js":[function(require,module,exports) {
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],"../../../../../usr/lib/node_modules/parcel/node_modules/buffer/index.js":[function(require,module,exports) {
+},{}],"../../../.nvm/versions/node/v12.14.1/lib/node_modules/parcel/node_modules/buffer/index.js":[function(require,module,exports) {
 
 var global = arguments[3];
 /*!
@@ -3882,7 +3882,7 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-},{"base64-js":"../../../../../usr/lib/node_modules/parcel/node_modules/base64-js/index.js","ieee754":"../../../../../usr/lib/node_modules/parcel/node_modules/ieee754/index.js","isarray":"../../../../../usr/lib/node_modules/parcel/node_modules/isarray/index.js","buffer":"../../../../../usr/lib/node_modules/parcel/node_modules/buffer/index.js"}],"../node_modules/socket.io-client/node_modules/socket.io-parser/is-buffer.js":[function(require,module,exports) {
+},{"base64-js":"../../../.nvm/versions/node/v12.14.1/lib/node_modules/parcel/node_modules/base64-js/index.js","ieee754":"../../../.nvm/versions/node/v12.14.1/lib/node_modules/parcel/node_modules/ieee754/index.js","isarray":"../../../.nvm/versions/node/v12.14.1/lib/node_modules/parcel/node_modules/isarray/index.js","buffer":"../../../.nvm/versions/node/v12.14.1/lib/node_modules/parcel/node_modules/buffer/index.js"}],"../node_modules/socket.io-client/node_modules/socket.io-parser/is-buffer.js":[function(require,module,exports) {
 var Buffer = require("buffer").Buffer;
 
 module.exports = isBuf;
@@ -3905,7 +3905,7 @@ function isBuf(obj) {
           (withNativeArrayBuffer && (obj instanceof ArrayBuffer || isView(obj)));
 }
 
-},{"buffer":"../../../../../usr/lib/node_modules/parcel/node_modules/buffer/index.js"}],"../node_modules/socket.io-client/node_modules/socket.io-parser/binary.js":[function(require,module,exports) {
+},{"buffer":"../../../.nvm/versions/node/v12.14.1/lib/node_modules/parcel/node_modules/buffer/index.js"}],"../node_modules/socket.io-client/node_modules/socket.io-parser/binary.js":[function(require,module,exports) {
 /*global Blob,File*/
 
 /**
@@ -4611,7 +4611,7 @@ function hasBinary (obj) {
   return false;
 }
 
-},{"isarray":"../node_modules/isarray/index.js","buffer":"../../../../../usr/lib/node_modules/parcel/node_modules/buffer/index.js"}],"../node_modules/arraybuffer.slice/index.js":[function(require,module,exports) {
+},{"isarray":"../node_modules/isarray/index.js","buffer":"../../../.nvm/versions/node/v12.14.1/lib/node_modules/parcel/node_modules/buffer/index.js"}],"../node_modules/arraybuffer.slice/index.js":[function(require,module,exports) {
 /**
  * An abstraction for slicing an arraybuffer even when
  * ArrayBuffer.prototype.slice is not supported
@@ -6856,7 +6856,7 @@ JSONPPolling.prototype.doWrite = function (data, fn) {
   }
 };
 
-},{"./polling":"../node_modules/engine.io-client/lib/transports/polling.js","component-inherit":"../node_modules/component-inherit/index.js"}],"../../../../../usr/lib/node_modules/parcel/src/builtins/_empty.js":[function(require,module,exports) {
+},{"./polling":"../node_modules/engine.io-client/lib/transports/polling.js","component-inherit":"../node_modules/component-inherit/index.js"}],"../../../.nvm/versions/node/v12.14.1/lib/node_modules/parcel/src/builtins/_empty.js":[function(require,module,exports) {
 
 },{}],"../node_modules/engine.io-client/lib/transports/websocket.js":[function(require,module,exports) {
 var Buffer = require("buffer").Buffer;
@@ -7156,7 +7156,7 @@ WS.prototype.check = function () {
   return !!WebSocketImpl && !('__initialize' in WebSocketImpl && this.name === WS.prototype.name);
 };
 
-},{"../transport":"../node_modules/engine.io-client/lib/transport.js","engine.io-parser":"../node_modules/engine.io-parser/lib/browser.js","parseqs":"../node_modules/parseqs/index.js","component-inherit":"../node_modules/component-inherit/index.js","yeast":"../node_modules/yeast/index.js","debug":"../node_modules/debug/src/browser.js","ws":"../../../../../usr/lib/node_modules/parcel/src/builtins/_empty.js","buffer":"../../../../../usr/lib/node_modules/parcel/node_modules/buffer/index.js"}],"../node_modules/engine.io-client/lib/transports/index.js":[function(require,module,exports) {
+},{"../transport":"../node_modules/engine.io-client/lib/transport.js","engine.io-parser":"../node_modules/engine.io-parser/lib/browser.js","parseqs":"../node_modules/parseqs/index.js","component-inherit":"../node_modules/component-inherit/index.js","yeast":"../node_modules/yeast/index.js","debug":"../node_modules/debug/src/browser.js","ws":"../../../.nvm/versions/node/v12.14.1/lib/node_modules/parcel/src/builtins/_empty.js","buffer":"../../../.nvm/versions/node/v12.14.1/lib/node_modules/parcel/node_modules/buffer/index.js"}],"../node_modules/engine.io-client/lib/transports/index.js":[function(require,module,exports) {
 /**
  * Module dependencies
  */
@@ -9269,7 +9269,7 @@ socket.on('connect', function () {
     if (_e) console.error('WS', _e);else console.log('WS', 'res', _r);
   });
 });
-},{"/assets/base.scss":"assets/base.scss","socket.io-client":"../node_modules/socket.io-client/lib/index.js"}],"../../../../../usr/lib/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"/assets/base.scss":"assets/base.scss","socket.io-client":"../node_modules/socket.io-client/lib/index.js"}],"../../../.nvm/versions/node/v12.14.1/lib/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -9297,7 +9297,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46057" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40161" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -9473,5 +9473,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../../../usr/lib/node_modules/parcel/src/builtins/hmr-runtime.js","main.js"], null)
+},{}]},{},["../../../.nvm/versions/node/v12.14.1/lib/node_modules/parcel/src/builtins/hmr-runtime.js","main.js"], null)
 //# sourceMappingURL=/main.1f19ae8e.js.map
