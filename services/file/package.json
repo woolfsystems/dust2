@@ -8,5 +8,11 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "mime-types": "^2.1.26",
+    "mkdirp": "^0.5.1",
+    "moleculer-web": "^0.8.5",
+    "path": "^0.12.7"
+  }
 }

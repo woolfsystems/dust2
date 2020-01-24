@@ -7,18 +7,19 @@ const SocketIOService = require('moleculer-io')
 const { MoleculerError } = require('moleculer').Errors
 
 module.exports = {
+	dependencies: ['postcode','auth'],
 	mixins: [ApiGateway, SocketIOService],
 	created(ctx) {
         let {parsed, error} = dotenv.config({path: `${__dirname}/.env`})
         if(error){
             throw new Error('failed to load config')
         }
-        this.config = {
+        this.env = {
             ...process.env,
             ...parsed
         }
-		this.settings.port = this.config.PORT || 9000
-		this.settings.ip = this.config.HOST || '127.0.0.1'
+		this.settings.port = this.env.PORT || 9000
+		this.settings.ip = this.env.HOST || '127.0.0.1'
     },
 	settings: {
 		// https: {

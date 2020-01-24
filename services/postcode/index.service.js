@@ -7,7 +7,7 @@ module.exports = {
 			//`${getSettings().backofficeEndpoint}${getSettings().apiPostcodeLookup}${_data.postcode}`
 			ctx.broker.emit("postcode lookup", {
 				postcode: ctx.params.postcode
-			}, ctx.meta);
+			})
 			return await ctx.broker
 				.call('backend.postcodeLookup', ctx.params, {meta: ctx.meta})
 				.then(response => {
