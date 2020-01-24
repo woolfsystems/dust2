@@ -21,6 +21,7 @@ const broker = new ServiceBroker({
     logLevel: LOG_LEVEL,
     transporter: 'NATS',
     requestTimeout: 5 * 1000,
+    hotReload: true,
     circuitBreaker: {
         enabled: false
     },
