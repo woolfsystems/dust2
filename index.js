@@ -30,7 +30,7 @@ const broker = new ServiceBroker({
 
 SERVICE_LIST.split(',')
     .forEach(async (_SERVICE) => {
-        let _FN = path.join(SERVICE_DIR, `${_SERVICE}/index.service.js`)
+        let _FN = path.join(SERVICE_DIR, `${String(_SERVICE).trim()}/index.service.js`)
         await broker.loadService(_FN)
         broker.logger.info('Loaded', _SERVICE, _FN)
     })
