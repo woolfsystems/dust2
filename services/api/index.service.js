@@ -1,26 +1,14 @@
 const fs = require('fs')
-const path = require('path')
 const dotenv = require('dotenv')
 const { ForbiddenError, UnAuthorizedError, ERR_NO_TOKEN, ERR_INVALID_TOKEN } = require('moleculer-web/src/errors')
 const ApiGateway = require('moleculer-web')
 const SocketIOService = require('moleculer-io')
+const EnvLoader = require('../../mixins/env.mixin')
 const { MoleculerError } = require('moleculer').Errors
 
 module.exports = {
 	dependencies: ['postcode','auth'],
-	mixins: [ApiGateway, SocketIOService],
-	created(ctx) {
-        let {parsed, error} = dotenv.config({path: `${__dirname}/.env`})
-        if(error){
-            throw new Error('failed to load config')
-        }
-        this.env = {
-            ...process.env,
-            ...parsed
-        }
-		this.settings.port = this.env.PORT || 9000
-		this.settings.ip = this.env.HOST || '127.0.0.1'
-    },
+	mixins: [ApiGateway, SocketIOService, EnvLoader],
 	settings: {
 		// https: {
 		// 	key: fs.readFileSync(path.join(__dirname, "../ssl/key.pem")),
@@ -84,18 +72,18 @@ module.exports = {
 					json: true
 				},
 				onBeforeCall(ctx, route, req, res) {
-					this.logger.info("onBeforeCall in protected route");
-					ctx.meta.authToken = req.headers["authorization"];
+					this.logger.info("onBeforeCall in protected route")
+					ctx.meta.authToken = req.headers["authorization"]
 				},
 				onAfterCall(ctx, route, req, res, data) {
-					this.logger.info("onAfterCall in protected route");
-					res.setHeader("X-Custom-Header", "Authorized path");
-					return data;
+					this.logger.info("onAfterCall in protected route")
+					res.setHeader("X-Custom-Header", "Authorized path")
+					return data
 				},
 				onError(req, res, err) {
-					res.setHeader("Content-Type", "text/plain");
-					res.writeHead(err.code || 500);
-					res.end("Route error: " + err.message);
+					res.setHeader("Content-Type", "text/plain")
+					res.writeHead(err.code || 500)
+					res.end("Route error: " + err.message)
 				}
 			},
 
@@ -120,11 +108,11 @@ module.exports = {
 					}
 				},
 				onAfterCall(ctx, route, req, res, data) {
-					this.logger.info("async onAfterCall in upload route");
+					this.logger.info("async onAfterCall in upload route")
 					return new this.Promise(resolve => {
-						res.setHeader("X-Response-Type", typeof(data));
-						resolve(data);
-					});
+						res.setHeader("X-Response-Type", typeof(data))
+						resolve(data)
+					})
 				},
 				mappingPolicy: "restrict"
 			},
@@ -153,17 +141,17 @@ module.exports = {
 				},
 				onBeforeCall(ctx, route, req, res) {
 					return new this.Promise(resolve => {
-						this.logger.info("async onBeforeCall in public. Action:", ctx.action.name);
-						ctx.meta.userAgent = req.headers["user-agent"];
-						//ctx.meta.headers = req.headers;
-						resolve();
+						this.logger.info("async onBeforeCall in public. Action:", ctx.action.name)
+						ctx.meta.userAgent = req.headers["user-agent"]
+						//ctx.meta.headers = req.headers
+						resolve()
 					});
 				},
 				onAfterCall(ctx, route, req, res, data) {
-					this.logger.info("async onAfterCall in public");
+					this.logger.info("async onAfterCall in public")
 					return new this.Promise(resolve => {
-						res.setHeader("X-Response-Type", typeof(data));
-						resolve(data);
+						res.setHeader("X-Response-Type", typeof(data))
+						resolve(data)
 					});
 				},
 			}
@@ -175,16 +163,16 @@ module.exports = {
 		},
 
 		onError(req, res, err) {
-			res.setHeader("Content-Type", "text/plain");
-			res.writeHead(err.code || 500);
-			res.end("Global error: " + err.message);
+			res.setHeader("Content-Type", "text/plain")
+			res.writeHead(err.code || 500)
+			res.end("Global error: " + err.message)
 		},
 
 		log4XXResponses: true,
 	},
 	events: {
 		"node.broken"(node) {
-			this.logger.warn(`The ${node.id} node is disconnected!`);
+			this.logger.warn(`The ${node.id} node is disconnected!`)
 		},
 		"**"(payload, sender, event) {
 			if (this.io)
@@ -192,10 +180,15 @@ module.exports = {
 					sender,
 					event,
 					payload
-				});
+				})
 		}
 	},
 	methods: {
+		config(){
+			this.settings.port = this.env.PORT || 9000
+			this.settings.ip = this.env.HOST || '127.0.0.1'
+			this.broker.logger.info(this.name, 'Applied configuration')
+		},
 		/**
 		 * Authorize the request
 		 *
@@ -236,21 +229,21 @@ module.exports = {
 				return this.Promise.reject(new UnAuthorizedError(ERR_NO_TOKEN));
 
 				*/
-			let token;
+			let token
 			if (req.headers.authorization) {
-				let type = req.headers.authorization.split(" ")[0];
+				let type = req.headers.authorization.split(" ")[0]
 				if (type === "Token") {
-					token = req.headers.authorization.split(" ")[1];
+					token = req.headers.authorization.split(" ")[1]
 				}
 			}
 			if (!token) {
-				return Promise.reject(new UnAuthorizedError(ERR_NO_TOKEN));
+				return Promise.reject(new UnAuthorizedError(ERR_NO_TOKEN))
 			}
 			// Verify JWT token
 			return ctx.call("auth.resolveToken", { token })
 				.then(user => {
-					return Promise.reject(new UnAuthorizedError(ERR_NO_TOKEN));
-				});
+					return Promise.reject(new UnAuthorizedError(ERR_NO_TOKEN))
+				})
 		}
 	}
-};
+}
