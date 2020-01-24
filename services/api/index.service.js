@@ -8,8 +8,8 @@ const { MoleculerError } = require("moleculer").Errors;
 module.exports = {
 	mixins: [ApiGateway, SocketIOService],
 	settings: {
-		port: 4000,
-		ip: "0.0.0.0",
+		port: process.env.HTTP_SERVER_PORT || 9000,
+		ip: process.env.HTTP_SERVER_HOST || '127.0.0.1',
 		// https: {
 		// 	key: fs.readFileSync(path.join(__dirname, "../ssl/key.pem")),
 		// 	cert: fs.readFileSync(path.join(__dirname, "../ssl/cert.pem"))

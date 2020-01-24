@@ -6,13 +6,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "parcel watch src/index.html -d dist",
-    "build": "parcel build src/index.html -d dist"
+    "build": "parcel build src/index.html -d dist",
+    "dust": "moleculer-runner -e services"
   },
   "dependencies": {
     "assets": "^3.0.1",
     "create-ssl-certificate": "^3.0.1",
     "d3": "^5.15.0",
     "d3-scale": "^3.2.1",
+    "dotenv": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "mime-types": "^2.1.26",
@@ -20,6 +22,7 @@
     "moleculer": "^0.13.12",
     "moleculer-http-client": "^0.3.0",
     "moleculer-io": "^1.1.3",
+    "moleculer-repl": "^0.6.2",
     "moleculer-web": "^0.8.5",
     "nats": "^1.3.2",
     "serve-static": "^1.14.1",

@@ -6,10 +6,13 @@ const socket = io('localhost:4000',{
 })
 socket.on('connect', () => {
     console.log('WS','connected')
-    socket.emit('clientCall','postcode.lookup',{postcode:'nw1 7rp', token: 'blah'},(_e, _r)=>{
+    socket.emit('clientCall','postcode.lookup',{postcode:'nw ', token: 'bloopsssssss'},(_e, _r)=>{
         if(_e)
             console.error('WS',_e)
         else
             console.log('WS','res',_r)
+    })
+    socket.on('event', (_evt) => {
+        console.info('WS','event',_evt)
     })
 })
