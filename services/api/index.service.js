@@ -37,7 +37,7 @@ module.exports = {
 		},
 		//http2: true,
 		cors: {
-			origin: "*",
+			origin: '*',
 			methods: ["GET", "OPTIONS", "POST", "PUT", "DELETE"],
 			allowedHeaders: "*",
 			//exposedHeaders: "*",
@@ -59,7 +59,7 @@ module.exports = {
 					"$node.*"
 				],
 				cors: {
-					origin: ["https://localhost:3000", "https://localhost:4000"],
+					origin: ["https://localhost:3000", `${process.env.HTTP_SERVER_HOST}:${process.env.HTTP_SERVER_PORT}`],
 					methods: ["GET", "OPTIONS", "POST"],
 				},
 				authorization: true,

@@ -5,8 +5,8 @@ module.exports = {
 		async lookup(ctx) {
 			ctx.broker.logger.info('meta',ctx.meta)
 			//`${getSettings().backofficeEndpoint}${getSettings().apiPostcodeLookup}${_data.postcode}`
-			ctx.broker.emit("plup1", {
-				id: ctx.params.postcode
+			ctx.broker.emit("postcode lookup", {
+				postcode: ctx.params.postcode
 			});
 			return await ctx.broker
 				.call('backend.postcodeLookup', ctx.params)

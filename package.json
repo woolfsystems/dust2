@@ -1,6 +1,6 @@
 {
-  "name": "dust2",
-  "version": "1.0.0",
+  "name": "dust",
+  "version": "2.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,9 +11,6 @@
   },
   "dependencies": {
     "assets": "^3.0.1",
-    "create-ssl-certificate": "^3.0.1",
-    "d3": "^5.15.0",
-    "d3-scale": "^3.2.1",
     "dotenv": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
@@ -25,10 +22,7 @@
     "moleculer-repl": "^0.6.2",
     "moleculer-web": "^0.8.5",
     "nats": "^1.3.2",
-    "serve-static": "^1.14.1",
-    "socket.io-client": "^2.3.0",
-    "winston": "^3.2.1",
-    "winston-pretty-console": "^0.1.1"
+    "socket.io-client": "^2.3.0"
   },
   "devDependencies": {
     "core-js": "^3",
