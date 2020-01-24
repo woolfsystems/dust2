@@ -1,15 +1,26 @@
-const fs = require("fs");
-const path = require("path");
-const { ForbiddenError, UnAuthorizedError, ERR_NO_TOKEN, ERR_INVALID_TOKEN } = require("moleculer-web/src/errors");
-const ApiGateway = require("moleculer-web");
-const SocketIOService = require("moleculer-io");
-const { MoleculerError } = require("moleculer").Errors;
+const fs = require('fs')
+const path = require('path')
+const dotenv = require('dotenv')
+const { ForbiddenError, UnAuthorizedError, ERR_NO_TOKEN, ERR_INVALID_TOKEN } = require('moleculer-web/src/errors')
+const ApiGateway = require('moleculer-web')
+const SocketIOService = require('moleculer-io')
+const { MoleculerError } = require('moleculer').Errors
 
 module.exports = {
 	mixins: [ApiGateway, SocketIOService],
+	created(ctx) {
+        let {parsed, error} = dotenv.config({path: `${__dirname}/.env`})
+        if(error){
+            throw new Error('failed to load config')
+        }
+        this.config = {
+            ...process.env,
+            ...parsed
+        }
+		this.settings.port = this.config.PORT || 9000
+		this.settings.ip = this.config.HOST || '127.0.0.1'
+    },
 	settings: {
-		port: process.env.HTTP_SERVER_PORT || 9000,
-		ip: process.env.HTTP_SERVER_HOST || '127.0.0.1',
 		// https: {
 		// 	key: fs.readFileSync(path.join(__dirname, "../ssl/key.pem")),
 		// 	cert: fs.readFileSync(path.join(__dirname, "../ssl/cert.pem"))
