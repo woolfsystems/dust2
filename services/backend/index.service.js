@@ -1,27 +1,10 @@
-const dotenv = require('dotenv')
+const EnvLoader = require('../../mixins/env.mixin')
 
-class BasicService {
-    created() {
-        let {parsed, error} = dotenv.config({path: `${__dirname}/.env`})
-        if(error){
-            throw new Error('failed to load config')
-        }
-        this.env = {
-            ...process.env,
-            ...parsed
-        }
-    }
-}
-
-module.exports = new class extends BasicService {
-    name = 'backend'
-    dependencies =  ['http']
-
-    created(){
-        super.created()
-        console.log('after env load')
-    }
-	actions = {
+module.exports = {
+    name: 'backend',
+    dependencies: ['http'],
+    mixins: [EnvLoader],
+	actions: {
 		postcodeLookup: {
 			cache: {
 				keys: [
