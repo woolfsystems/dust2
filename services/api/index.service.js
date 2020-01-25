@@ -174,7 +174,7 @@ module.exports = {
 		"node.broken"(node) {
 			this.logger.warn(`The ${node.id} node is disconnected!`)
 		},
-		"**"(payload, sender, event) {
+		"metrics.trace.span.*"(payload, sender, event) {
 			if (this.io)
 				this.io.emit("event", {
 					sender,

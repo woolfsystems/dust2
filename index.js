@@ -2,17 +2,32 @@ const path = require('path')
 const { ServiceBroker } = require('moleculer')
 const dotenv = require('dotenv')
 
-let {parsed, error} = dotenv.config({path: '.env'})
+let {parsed, error} = dotenv.config()
 if(error)
     throw error
 
-const { 
+const {
     SERVICE_LIST,
+    SERVICE_EXCLUSION_LIST,
     SERVICE_DIR,
     NODEID,
     NAMESPACE,
     LOG_LEVEL
 } = parsed
+
+const loadService = (_BROKER, _SERVICE) =>
+    new Promise((resolve, reject) => {
+        if(!SERVICE_EXCLUSION_LIST.split(',').includes(_SERVICE)){
+            let FN = path.join(SERVICE_DIR, `${String(_SERVICE).trim()}/index.service.js`)
+            let _SVC = broker.loadService(FN)
+            broker.logger.info('Loaded', _SERVICE, FN)
+            let deps = _SVC.dependencies || []
+            resolve(Promise.all(deps.map(s =>
+                loadService(broker, s))))
+        return
+        }
+        reject(`Service in exclusion list '${_SERVICE}'`)
+    })
 
 const broker = new ServiceBroker({
     nodeID: NODEID,
@@ -25,15 +40,23 @@ const broker = new ServiceBroker({
     circuitBreaker: {
         enabled: false
     },
-    metrics: true
+    metrics: {
+        params: true,
+        meta: true
+    }
 })
 
-
-SERVICE_LIST.split(',')
-    .forEach(async (_SERVICE) => {
-        let _FN = path.join(SERVICE_DIR, `${String(_SERVICE).trim()}/index.service.js`)
-        await broker.loadService(_FN)
-        broker.logger.info('Loaded', _SERVICE, _FN)
-    })
-
-broker.start()
+try{
+    let servicesLoaded = Promise.all(SERVICE_LIST.split(',')
+        .map(s =>
+            loadService(broker,s)))
+    
+    servicesLoaded
+        .then(_ =>
+            broker.logger.info('Services loaded'))
+        .catch(error =>
+            broker.logger.error(error))
+    broker.start()
+}catch(e){
+    console.error(e)    
+}

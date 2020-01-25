@@ -3,14 +3,14 @@ module.exports = {
 	dependencies: ['backend'],
 	actions: {
 		async lookup(ctx) {
-			ctx.broker.logger.info('meta',ctx.meta)
+			ctx.broker.logger.info('meta',ctx.meta,ctx.requestID)
 
 			ctx.broker.emit("postcode lookup", {
 				postcode: ctx.params.postcode
 			})
 
-			return await ctx.broker
-				.call('backend.postcodeLookup', ctx.params, { meta: ctx.meta })
+			return await ctx
+				.call('backend.postcodeLookup', ctx.params)
 				.then(response => {
 					ctx.broker.logger.info(response)
 					return response

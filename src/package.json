@@ -1,0 +1,21 @@
+{
+  "name": "dashboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hyperapp/router": "^0.7.2",
+    "@hyperapp/time": "0.0.10",
+    "crossfilter2": "^1.5.2",
+    "hyperapp": "^2.0.3",
+    "inspector": "^0.5.0",
+    "view": "^1.1.1"
+  },
+  "babel": {}
+}

@@ -10,6 +10,8 @@
     "dust": "node index.js"
   },
   "dependencies": {
+    "@babel/preset-react": "^7.8.3",
+    "@hyperapp/router": "^0.7.2",
     "assets": "^3.0.1",
     "dotenv": "^8.2.0",
     "fakerator": "^0.3.1",
@@ -38,5 +40,10 @@
   "homepage": "https://github.com/woolfsystems/dust2#readme",
   "alias": {
     "assets": "assets"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-react"
+    ]
   }
 }

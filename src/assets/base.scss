@@ -6,6 +6,7 @@ h2,
 h3,
 h4{
     font-family: 'Montserrat', sans-serif;
+    font-weight: normal;
 }
 h1{
     font-size: 2.5em;
@@ -22,7 +23,7 @@ body {
     background-color: #eee;
     color: #111;
 
-    &> section {
+    &> main {
         display: grid;
         grid:
             "heading" min-content
@@ -34,7 +35,7 @@ body {
         margin: 0 auto;
         grid-gap: 1em;
         background-color: #f7f4fd;
-        padding: 2em 1em;
+        padding: 0.5em 1em;
         box-shadow: 0 0 8px -2px black;
 
         &> hgroup {
@@ -57,6 +58,7 @@ body {
         }
         &> footer {
             grid-area: base;
+            color: #444;
         }
     }
 }
@@ -86,7 +88,7 @@ figure {
 
 @media screen and (min-width: 1280px) {
     body {
-        &> section {
+        &> main {
             width: 1280px;
             display: grid;
             grid-template:
@@ -95,7 +97,7 @@ figure {
                 max-content auto;
 
             &> section {
-            
+                display: block;
             }
         }
     }
@@ -103,7 +105,7 @@ figure {
 
 @media screen and (max-width: 1024px) {
     body{
-        &> section {
+        &> main {
             width: 100vw;
 
             &> section {
@@ -112,5 +114,39 @@ figure {
                 }
             }
         }
+    }
+}
+
+a{
+    color: inherit;
+}
+
+hgroup ol{
+    list-style: none;
+    display: grid;
+    grid-auto-flow: column;
+    width: min-content;
+    gap: 0.25em;
+    & li{
+        color: #444;
+        line-height: 1em;
+        height: 1em;
+        width: min-content;
+        display: block;
+        border-right: 1px solid;
+        padding-right: 0.25em;
+        cursor: pointer;
+
+        &:last-child{
+            border-right: none;
+            padding-right: 0;
+        }
+        &[selected]{
+            color: #333;
+            text-decoration: red underline;
+        }
+    }
+    & li:last-child{
+        
     }
 }
