@@ -14,6 +14,7 @@
     "@hyperapp/time": "0.0.10",
     "crossfilter2": "^1.5.2",
     "hyperapp": "^2.0.3",
+    "hyperapp-events": "^0.2.0",
     "inspector": "^0.5.0",
     "view": "^1.1.1"
   },

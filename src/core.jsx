@@ -1,4 +1,5 @@
 import io from 'socket.io-client'
+import {h} from 'hyperapp'
 
 import CallStore from './lib/filter'
 import CoreView from './layout/core.jsx'
@@ -7,13 +8,19 @@ const init = {
     url: '/',
     store: new CallStore()
 }
-  
+const events = {
+    'route': (state, actions) => {
+        console.log('route',)
+    }
+}
 const actions = {
-    router: (state, url) => ({
+    route: (state, url, data, emit) => {
+        console.log('a',url,data,emit)
+        return ({
         ...state,
         url
-    }),
-    call: (state, action) => {
+    })},
+    call(state, action) {
         console.log('call',action)
     return state
     }
@@ -45,9 +52,15 @@ socket.on('connect', () => {
     })
 })
 
-export default {
+const controller = {
+
+}
+
+export default (node) => ({
+    node,
+    events,
     init,
     actions,
-    view: CoreView(init, actions),
-    node: document.getElementById('app')
-}
+    state:init,
+    view: CoreView(actions)
+})

@@ -1,4 +1,5 @@
 import { app } from 'hyperapp'
-import core from './core'
+import withEvents from 'hyperapp-events'
+import core from './core.jsx'
 
-app(core)
+app(core(document.getElementById('app')))

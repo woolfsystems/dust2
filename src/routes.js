@@ -14,6 +14,7 @@ const routes = [
     ['editor','/editor',EditorView]
 ]
 const Router = ({url}) =>
+    console.log(url) ||
     (routes.find(([,_url]) =>
         url === _url)[2]
         || RootView)()
