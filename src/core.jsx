@@ -58,9 +58,8 @@ const controller = {
 
 export default (node) => ({
     node,
-    events,
+    //events,
     init,
-    actions,
-    state:init,
+    //actions,
     view: CoreView(actions)
 })
