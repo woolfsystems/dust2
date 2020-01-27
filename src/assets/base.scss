@@ -45,8 +45,10 @@ body {
                 top: 0.2em;
             }
             &> ol {
-                background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, white 50%);
+                background: linear-gradient(180deg, #f7f4fd00 0%, #f7f4fdff 100%);
                 position: relative;
+                margin-top: -1em;
+                padding-top: 1em;
             }
         }
         &> section {

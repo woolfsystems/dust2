@@ -1,5 +1,6 @@
+import React from 'react'
+import PropTypes from 'prop-types'
 import Regl from 'regl'
-import { h } from 'hyperapp'
 import angleNormals from 'angle-normals'
 import mat4 from 'gl-mat4'
 
@@ -62,7 +63,7 @@ const loadView = (data) => function(canvas){
 
             varying vec3 vColor;
             void main() {
-                gl_FragColor = vec4(vColor, 1.0);
+                gl_FragColor = vec4(vColor, 0.8);
             }`,
 
         vert: `
@@ -70,23 +71,24 @@ const loadView = (data) => function(canvas){
 
             attribute vec2 p;
 
-            // These three are instanced attributes.
             attribute vec3 color;
-            attribute vec2 offset;
+            attribute vec3 offset;
             attribute float angle;
 
             uniform mat4 view;
             uniform mat4 projection;
+            uniform mat4 model;
             uniform vec2 resolution;
             uniform vec2 mouse;
             varying vec3 vColor;
 
             void main() {
-                vec2 position = p;//p * resolution;
-                gl_Position = vec4(
-                cos(angle) * position.x + sin(angle) * position.y + offset.x,
-                    position.y + offset.y, 0, 1) * view;
-                // gl_Position = vec4(p, 0, 1) * projection;
+                gl_Position = projection * view * model
+                    * vec4(
+                        p.x + offset.x,
+                        p.y + offset.y,
+                        offset.z,
+                        1);
                 vColor = color;
             }`,
         attributes: {
@@ -97,10 +99,12 @@ const loadView = (data) => function(canvas){
                     Array(N * N).fill().map((_, i) => {
                         var x = -1 + 2 * Math.floor(i / N) / N + 0.1
                         var y = -1 + 2 * (i % N) / N + 0.1
-                    return [x, y]
+                        var z = ((Math.random() * 50) -25) * 0.04
+                    return [x, y, z]
                     })),
                 divisor: 1 // one separate offset for every triangle.
             },
+            
 
             color: {
                 buffer: regl.buffer(
@@ -178,22 +182,25 @@ const loadView = (data) => function(canvas){
         uniforms: {
             resolution: regl.prop('resolution'),
             mouse: regl.prop('mouse'),
-            tick: ({tick}) => Math.cos(tick*0.03),
+            tick: ({tick}) =>
+                tick % 100,
             model: mat4.identity([]),
-            view: ({tick}) => {
-              const t = 0.02 * tick
-              return mat4.lookAt([],
-                [0, 20 * Math.cos(t), 20 * Math.sin(t)],
-                [0, 0, 0],
-                [0, 1, 0])
+            view: ({tick, viewportHeight}) => {
+                let vpos = ((mousePosition[1]/viewportHeight) * 100)
+                const t = Math.abs(vpos*0.03)
+                return mat4.lookAt([],
+                    [0, 1 * Math.cos(t), 1 * Math.sin(t)],
+                    [0, 0, 0],
+                    [0, 1, 0])
             },
             projection: ({viewportWidth, viewportHeight}) =>
-              mat4.perspective([],
-                Math.PI / 4,
-                viewportWidth / viewportHeight,
-                0.01,
-                1000
-              )
+                mat4.ortho([], -1, 1, -1, 1, -4, 4)
+            //    .perspective([],
+            //     Math.PI / 4,
+            //     viewportWidth / viewportHeight,
+            //     -100,
+            //     1000
+            //   )
         },
         framebuffer: fbo
     })
@@ -218,11 +225,32 @@ const loadView = (data) => function(canvas){
     })
 }
 
-export default ({data}) => {
+export default class Gantt extends React.Component {
+    static defaultProps = {
+		data: []
+	}
+	
+	static propTypes = {
+		data: PropTypes.array
+	}
 
-    let lid = `gantt_${_il++}`
-    requestAnimationFrame(()=>{
-        let _p = document.querySelector(`#${lid} > canvas`)
+    constructor(props){
+        super(props)
+        this.state = {
+            ...props
+        }
+        this.el = React.createRef()
+    }
+	componentDidMount() {
+        let _p = this.el.current
+        loadView(this.state.data)(_p)        
+        _p.animate([
+            {opacity: 0},
+            {opacity: 1}
+        ], {
+            duration: 500
+        }).onfinish = (_e) =>
+            _p.style.opacity = 1
         let onResize = function(){
             try{
                 let {width, height} = _p.parentElement.getBoundingClientRect()
@@ -234,24 +262,10 @@ export default ({data}) => {
             return true
         }
         onResize() && window.addEventListener('resize',onResize)
-
-        loadView(data)(_p)
-        _p.animate([
-            {opacity: 0},
-            {opacity: 1}
-        ], {
-            duration: 500
-        }).onfinish = (_e) =>
-            _p.style.opacity = 1
-    })
-    
-    return {
-        props: {
-            data,
-            id: lid,
-            class: 'popout',
-        },
-        name: 'article',
-        children: [ (<canvas style={{opacity: 0}}></canvas>)],
+    }
+    render(){
+        return (<article className={"popout"}>
+            <canvas ref={this.el} style={{opacity: 0}}></canvas>
+        </article>)
     }
 }

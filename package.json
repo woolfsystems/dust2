@@ -10,6 +10,8 @@
     "dust": "node index.js"
   },
   "dependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-react": "^7.8.3",
     "@hyperapp/router": "^0.7.2",
     "assets": "^3.0.1",
@@ -41,10 +43,5 @@
   "homepage": "https://github.com/woolfsystems/dust2#readme",
   "alias": {
     "assets": "assets"
-  },
-  "babel": {
-    "presets": [
-      "@babel/preset-react"
-    ]
   }
 }

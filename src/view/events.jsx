@@ -1,13 +1,16 @@
-/** @jsx h */
-/** @jsxFrag Fragment */
-
-import { h, app } from 'hyperapp'
+import React from 'react'
 import Gantt from '/components/gantt.jsx'
 
-const View = state =>
-    (<section>
-        <legend>requests</legend>
-        <Gantt data={[]}></Gantt>
-    </section>)
-
-export default View
+export default class EventView extends React.Component{
+    static defaultProps = {
+    }
+    constructor(props) {
+      super(props)
+    }
+    render(){
+        return (<section>
+            <legend>requests</legend>
+            <Gantt data={[]}></Gantt>
+        </section>)
+    }
+}
