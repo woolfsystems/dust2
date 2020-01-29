@@ -4,7 +4,7 @@ const { ForbiddenError, UnAuthorizedError, ERR_NO_TOKEN, ERR_INVALID_TOKEN, ERR_
 const ApiGateway = require('moleculer-web')
 const SocketIOService = require('moleculer-io')
 const EnvLoader = require('../../mixins/env.mixin')
-const { MoleculerError } = require('moleculer').Errors
+const { MoleculerError, MoleculerRetryableError } = require('moleculer').Errors
 
 const USER_TYPE_ANON = Symbol('Anonymous')
 const USER_TYPE_CLIENT = Symbol('Registered Client')
@@ -35,19 +35,18 @@ module.exports = {
 				'/': {
 					authorization: true,
 					middlewares: [
-						function ({client: { user }}, next){
-							let error = user instanceof User
-								? null
-								: user
-							
-							if(error){
-								console.error('[AUTH]', error)
-								return this.Promise.resolve(error)
-							}
+						// function ({client: { user }}, next) {
+						// 	let error = user instanceof User
+						// 		? null
+						// 		: user
 
-							console.log('[AUTH]','ok', user, user.type)
-							return next()
-						}
+						// 	if (error) {
+						// 		return next(this.Promise.reject(new ForbiddenError('AUTH_MISSING', error)))
+						// 	}
+
+						// 	console.log('[AUTH]','ok', user, user.type)
+						// 	return next()
+						// }
 					],
 					events: {
 						'call': {
@@ -61,7 +60,22 @@ module.exports = {
 								'postcode.*',
 								'client.*',
 								'$node.*'
-							]
+							],
+							callOptions: {
+								
+							},
+							onBeforeCall: async function(ctx, socket, action, params, callOptions) {
+								ctx.meta.socketid = socket.id
+								if(ctx.meta.user instanceof User){
+									this.logger.info('Valid user')
+								}else{
+									this.logger.error('Invalid user')
+									throw new ForbiddenError('BAD_AUTH',ctx.meta.user)
+								}
+							},
+							onAfterCall:async function(ctx, socket, res) {
+							
+							}
 						}
 					}
 				}
@@ -206,6 +220,14 @@ module.exports = {
 		"node.broken"(node) {
 			this.logger.warn(`The ${node.id} node is disconnected!`)
 		},
+		"**"(payload, sender, event) {
+			if (this.io)
+				this.io.emit("metric", {
+					sender,
+					event,
+					payload
+				})
+		},
 		"metrics.trace.span.*"(payload, sender, event) {
 			if (this.io)
 				this.io.emit("event", {
@@ -216,16 +238,27 @@ module.exports = {
 		}
 	},
 	methods: {
+		/**
+		 * Finalise config for service
+		 */
 		config(){
 			this.settings.port = this.env.PORT || 9000
 			this.settings.ip = this.env.HOST || '127.0.0.1'
 			this.broker.logger.info(this.name, 'Applied configuration')
 		},
-		async socketAuthorize(socket, eventHandler){
+
+		/**
+		 * Authorize the socket
+		 *
+		 * @param {SocketIO} socket
+		 * @param {Service} eventHandler
+		 * @returns {Promise}
+		 */
+		socketAuthorize(socket, eventHandler){
 			let accessToken = socket.handshake.query.token
-			if (accessToken) {
+			if (!accessToken) {
 				try{
-					return await this.broker.call("auth.resolveToken", { accessToken }).then(user => {
+					return this.broker.call('auth.resolveToken', { accessToken }).then(user => {
 						return new User({
 							id: user.id,
 							type: USER_TYPE_CLIENT,
@@ -240,16 +273,16 @@ module.exports = {
 						return new UnAuthorizedError(ERR_INVALID_TOKEN)
 					})
 				} catch(e) {
-					console.error('AUTH',e)
-					return new UnAuthorizedError(ERR_UNABLE_DECODE_PARAM)
+					return this.Promise.reject(e)
 				}
 			} else {
-				return new User({
+				return this.Promise.resolve(new User({
 					id: undefined,
 					type: USER_TYPE_ANON
-				})
+				}))
 			}
 		},
+
 		/**
 		 * Authorize the request
 		 *
