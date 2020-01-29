@@ -56,9 +56,9 @@ body {
             grid: auto-flow min-content / auto;
             grid-area: content;
             grid-gap: 0.5em;
-            position: relative;
-
+            
             &> section {
+                position: relative;    
                 legend {
                     top: 1em;
                     color: #eee;
@@ -164,14 +164,17 @@ hgroup ol{
         border-right: 1px solid;
         padding-right: 0.25em;
         cursor: pointer;
+        transition: text-decoration 500ms ease;
+        text-decoration: transparent underline;
 
         &:last-child{
             border-right: none;
             padding-right: 0;
         }
-        &[selected]{
+        &.selected{
             color: #333;
             text-decoration: red underline;
+            transition: text-decoration 500ms ease;
         }
     }
 }

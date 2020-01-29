@@ -1,12 +1,12 @@
 const HTTPClientService = require('moleculer-http-client')
 
 module.exports = {
-    name: "http",
-    mixins: [HTTPClientService],    
+    name: 'http',
+    mixins: [HTTPClientService],
     settings: {
         httpClient: {
             logging: true,
-            responseFormatter: "body",
+            responseFormatter: 'body',
             defaultOptions: {
 
             }

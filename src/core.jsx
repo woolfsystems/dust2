@@ -43,8 +43,7 @@ if(window.sounds){
         }
     }).toMaster();
 }
-  //set the attributes using the set interface
-//   synth.set("detune", -1200);
+
 const socket = io('localhost:4000', {
     reconnection: true,
 })

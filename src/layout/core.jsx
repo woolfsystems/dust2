@@ -1,5 +1,5 @@
-
 import React from 'react'
+
 import '/assets/base.scss'
 import { Router, routes } from '/routes.js'
 
@@ -17,15 +17,14 @@ class MenuList extends React.Component{
       }
     }
     static getDerivedStateFromProps({selected}, state){
-        console.log(selected)
-        return {
-            selected,
-            ...state
-        }
+        return Object.assign(
+            state,
+            {selected}
+        )
     }
     render(){
         return (<ol>{this.state.items.map(([label,url],_i) =>
-            <li key={_i} onClick={e=>this.state.route(url)} selected={url === this.state.selected}>{label}</li>
+            <li key={_i} onClick={e=>this.state.route(url)} className={url === this.state.selected?'selected':''}>{label}</li>
         )}</ol>)
     }
 }
@@ -33,30 +32,37 @@ class MenuList extends React.Component{
 export default class extends React.Component {
     static defaultProps = {
         pipes: { },
-        url: '/events'
+        url: null
     }
     constructor(props) {
       super(props)
+      let _surl = localStorage.getItem('url') || '/'
       this.state = {
-          url: props.url
+          url: JSON.parse(_surl)
       }
     }
+    static getDerivedStateFromProps(props, state){
+        return {
+            ...props,
+            ...state
+        }
+    }
     route(url){
-        console.log('u',url)
+        localStorage.setItem('url',JSON.stringify(url))
         this.setState({url})
     }
     render(){
         return (<React.Fragment>
-            <hgroup>
-                <h1>cast</h1>
-                <MenuList items={routes} route={this.route.bind(this)} selected={this.state.url} />
-            </hgroup>
-            <section id="content">
-                <Router url={this.state.url} />
-            </section>
-            <footer>
-                <span>fnord software limited &copy; 2020</span>
-            </footer>
+                <hgroup>
+                    <h1>cast</h1>
+                    <MenuList items={routes} route={this.route.bind(this)} selected={this.state.url} />
+                </hgroup>
+                <section id="content">
+                    <Router url={this.state.url} />
+                </section>
+                <footer>
+                    <span>fnord software limited &copy; 2020</span>
+                </footer>
             </React.Fragment>)
     }
 }

@@ -1,9 +1,15 @@
-/** @jsx h */
-/** @jsxFrag Fragment */
+import React from 'react'
 
-import { h, app } from 'hyperapp'
-
-const View = state =>
-    (<section>admin</section>)
-
-export default View
+export default class RootView extends React.Component{
+    static defaultProps = {
+    }
+    constructor(props) {
+      super(props)
+    }
+    render(){
+        return (<section>
+            <legend>admin</legend>
+            <article className="popover"></article>
+        </section>)
+    }
+}

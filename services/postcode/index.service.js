@@ -13,7 +13,7 @@ module.exports = {
 				.call('backend.postcodeLookup', ctx.params)
 				.then(response => {
 					ctx.broker.logger.info(response)
-					return response
+					return ctx.call('client.generateContract', ctx.params)
 				}).catch(error => {
 					ctx.broker.logger.error(error)
 					return error

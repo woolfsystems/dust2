@@ -21,8 +21,8 @@ module.exports = {
                 ctx.broker.logger.info('api', `${this.env.API_BACKEND_HOST}/${this.env.API_BACKEND_SERVICE_POSTCODE}/${ctx.params.postcode}`)
 				return await ctx
 					.call('http.get', {
-                        url: 'https://httpbin.org/json',
-                        opt: { responseType: 'json' }
+                        url: 'http://google.com/',
+                        opt: { responseType: 'text' }
                         //url: `${this.config.API_BACKEND_HOST}/${this.config.API_BACKEND_SERVICE_POSTCODE}/${ctx.params.postcode}`
 					}).then(response => {
 						ctx.broker.logger.info(response)
@@ -41,7 +41,7 @@ module.exports = {
 			async handler(ctx) {
 				return await ctx
 					.call('http.post', {
-                        url: 'https://httpbin.org/status/200'
+                        url: 'http://google.com/',
                         //url: `${this.config.API_BACKEND_HOST}/${this.config.API_BACKEND_SERVICE_LOGIN}`
 					}).then(response => {
 						ctx.broker.logger.info(response.data)

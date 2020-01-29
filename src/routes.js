@@ -5,13 +5,16 @@ import EventView from '/view/events.jsx'
 import RootView  from '/view/root.jsx'
 import EditorView from '/view/editor.jsx'
 import AdminView from '/view/admin.jsx'
+import JournalView from '/view/journal.jsx'
 
 const routes = [
     ['dash','/',RootView],
     ['events','/events',EventView],
+    ['journal','/journal',JournalView],
     ['admin','/admin',AdminView],
     ['editor','/editor',EditorView]
 ]
+
 class Router extends React.Component{
     static defaultProps = {
 		url: ''
@@ -27,7 +30,6 @@ class Router extends React.Component{
         }
     }
     static getDerivedStateFromProps({url}, state){
-        console.log('R',url)
         return {
             url,
             view: routes.find(([,_url]) =>
@@ -36,12 +38,11 @@ class Router extends React.Component{
         }
     }
     render(){
-
-        console.log(this.state)
         let TempView = this.state.view
         return (<TempView key={this.state.url} />)
     }
 }
+
 export {
     Router,
     routes
