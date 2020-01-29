@@ -1,10 +1,26 @@
 const fs = require('fs')
 const dotenv = require('dotenv')
-const { ForbiddenError, UnAuthorizedError, ERR_NO_TOKEN, ERR_INVALID_TOKEN } = require('moleculer-web/src/errors')
+const { ForbiddenError, UnAuthorizedError, ERR_NO_TOKEN, ERR_INVALID_TOKEN, ERR_UNABLE_DECODE_PARAM } = require('moleculer-web/src/errors')
 const ApiGateway = require('moleculer-web')
 const SocketIOService = require('moleculer-io')
 const EnvLoader = require('../../mixins/env.mixin')
 const { MoleculerError } = require('moleculer').Errors
+
+const USER_TYPE_ANON = Symbol('Anonymous')
+const USER_TYPE_CLIENT = Symbol('Registered Client')
+
+class User {
+	id = undefined
+	meta = { }
+	type = undefined
+
+	constructor({id, type, meta}){
+		this.id = id
+		this.type = type
+
+		this.meta = meta
+	}
+}
 
 module.exports = {
 	dependencies: ['postcode','auth'],
@@ -17,6 +33,22 @@ module.exports = {
 		io: {
 			namespaces: {
 				'/': {
+					authorization: true,
+					middlewares: [
+						function ({client: { user }}, next){
+							let error = user instanceof User
+								? null
+								: user
+							
+							if(error){
+								console.error('[AUTH]', error)
+								return this.Promise.resolve(error)
+							}
+
+							console.log('[AUTH]','ok', user, user.type)
+							return next()
+						}
+					],
 					events: {
 						'call': {
 							whitelist: [
@@ -35,7 +67,7 @@ module.exports = {
 				}
 			}
 		},
-		//http2: true,
+		http2: true,
 		cors: {
 			origin: '*',
 			methods: ["GET", "OPTIONS", "POST", "PUT", "DELETE"],
@@ -189,6 +221,35 @@ module.exports = {
 			this.settings.ip = this.env.HOST || '127.0.0.1'
 			this.broker.logger.info(this.name, 'Applied configuration')
 		},
+		async socketAuthorize(socket, eventHandler){
+			let accessToken = socket.handshake.query.token
+			if (accessToken) {
+				try{
+					return await this.broker.call("auth.resolveToken", { accessToken }).then(user => {
+						return new User({
+							id: user.id,
+							type: USER_TYPE_CLIENT,
+							meta: {
+								email: user.email,
+								token: accessToken
+							}
+						})
+					}).catch(err => {
+						if (err instanceof MoleculerError)
+							throw err
+						return new UnAuthorizedError(ERR_INVALID_TOKEN)
+					})
+				} catch(e) {
+					console.error('AUTH',e)
+					return new UnAuthorizedError(ERR_UNABLE_DECODE_PARAM)
+				}
+			} else {
+				return new User({
+					id: undefined,
+					type: USER_TYPE_ANON
+				})
+			}
+		},
 		/**
 		 * Authorize the request
 		 *
@@ -241,7 +302,7 @@ module.exports = {
 			}
 			// Verify JWT token
 			return ctx.call("auth.resolveToken", { token })
-				.then(user => {
+				.catch(user => {
 					return Promise.reject(new UnAuthorizedError(ERR_NO_TOKEN))
 				})
 		}

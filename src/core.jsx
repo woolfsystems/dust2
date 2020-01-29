@@ -1,6 +1,6 @@
 import io from 'socket.io-client'
-import {h} from 'hyperapp'
 import Tone from 'tone'
+import SocketIOFileClient from 'socket.io-file-client'
 
 import CallStore from './lib/filter'
 import CoreView from './layout/core.jsx'
@@ -48,11 +48,20 @@ const socket = io('localhost:4000', {
     reconnection: true,
 })
 
+const uploader = SocketIOFileClient(socket)
+
+const bindSubmitToUpload = function(_form, _ul_elem, next) {
+    _form.addEventHandler('onsubmit', _ev => {
+        _ev.preventDefault()
+        next(uploader.upload(_ul_elem))
+    })
+}
+
 socket.on('connect', () => {
     console.log('[WS]', 'connected')
     socket.emit('clientCall', 'postcode.lookup', { postcode:'nw ', token: 'bloopsssssss' }, (_e, _r) => {
         if(_e)
-            console.error('[WS]', _e)
+            console.error('[WS?]', _e)
         else
             console.log('[WS]', 'res', _r)
     })
@@ -75,6 +84,10 @@ socket.on('connect', () => {
             console.info('[WS]', 'event', 'other', _evt)
         }
     })
+    socket.on('error', (_evt) => {
+        console.error('[WS!]', _evt)
+    })
+
 })
 
 const controller = {
