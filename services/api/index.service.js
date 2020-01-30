@@ -6,21 +6,8 @@ const SocketIOService = require('moleculer-io')
 const EnvLoader = require('@lib/mixins/env.mixin')
 const { MoleculerError, MoleculerRetryableError } = require('moleculer').Errors
 
-const USER_TYPE_ANON = Symbol('Anonymous')
-const USER_TYPE_CLIENT = Symbol('Registered Client')
-
-class User {
-	id = undefined
-	meta = { }
-	type = undefined
-
-	constructor({id, type, meta}){
-		this.id = id
-		this.type = type
-
-		this.meta = meta
-	}
-}
+const { USER_TYPE_ANON, USER_TYPE_CLIENT } = require('@model/role')
+const { User } = require('@model/user')
 
 module.exports = {
 	dependencies: ['postcode','auth'],
@@ -62,7 +49,7 @@ module.exports = {
 								'$node.*'
 							],
 							callOptions: {
-								
+
 							},
 							onBeforeCall: async function(ctx, socket, action, params, callOptions) {
 								ctx.meta.socketid = socket.id

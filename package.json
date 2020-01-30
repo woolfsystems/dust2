@@ -1,13 +1,13 @@
 {
-  "name": "dust",
+  "name": "@woolfsystems/dust",
   "version": "2.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "core/broker/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "parcel watch frontends/administration/index.html -d dist",
-    "build": "parcel build frontends/administration/index.html -d dist",
-    "dust": "node core/broker/index.js"
+    "watch:frontend": "parcel watch frontends/administration/index.html -d dist",
+    "build:frontend": "parcel build frontends/administration/index.html -d dist",
+    "dust:run": "node core/broker/index.js"
   },
   "dependencies": {
     "@babel/core": "^7.8.3",
