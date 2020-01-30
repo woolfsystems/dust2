@@ -1,3 +1,4 @@
+require('module-alias/register')
 const path = require('path')
 const { ServiceBroker } = require('moleculer')
 const dotenv = require('dotenv')

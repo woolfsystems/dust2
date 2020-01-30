@@ -3,7 +3,7 @@ const dotenv = require('dotenv')
 const { ForbiddenError, UnAuthorizedError, ERR_NO_TOKEN, ERR_INVALID_TOKEN, ERR_UNABLE_DECODE_PARAM } = require('moleculer-web/src/errors')
 const ApiGateway = require('moleculer-web')
 const SocketIOService = require('moleculer-io')
-const EnvLoader = require('../../mixins/env.mixin')
+const EnvLoader = require('@lib/mixins/env.mixin')
 const { MoleculerError, MoleculerRetryableError } = require('moleculer').Errors
 
 const USER_TYPE_ANON = Symbol('Anonymous')

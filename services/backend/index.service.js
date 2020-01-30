@@ -1,4 +1,4 @@
-const EnvLoader = require('../../mixins/env.mixin')
+const EnvLoader = require('@lib/mixins/env.mixin')
 
 module.exports = {
     name: 'backend',

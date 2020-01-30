@@ -8,16 +8,16 @@ import AdminView from '/view/admin.jsx'
 import JournalView from '/view/journal.jsx'
 
 const routes = [
-    ['dash','/',RootView],
-    ['events','/events',EventView],
-    ['journal','/journal',JournalView],
-    ['admin','/admin',AdminView],
-    ['editor','/editor',EditorView]
+    ['dash', '/', RootView],
+    ['events', '/events', EventView],
+    ['journal', '/journal', JournalView],
+    ['admin', '/admin', AdminView],
+    ['editor', '/editor', EditorView]
 ]
 
 class Router extends React.Component{
     static defaultProps = {
-		url: ''
+		url: '/'
 	}
 	
 	static propTypes = {
@@ -29,13 +29,18 @@ class Router extends React.Component{
             ...props
         }
     }
-    static getDerivedStateFromProps({url}, state){
-        return {
-            url,
-            view: routes.find(([,_url]) =>
-                url === _url)[2]
-                || RootView,
-        }
+    static getDerivedStateFromProps({url}, state) {
+        let _lookup = routes.find(([,_url]) =>
+                url === _url)
+        return typeof _lookup !== 'undefined'
+            ? {
+                url,
+                view: _lookup[2]
+            }
+            : {
+                url: '/',
+                view: RootView
+            }
     }
     render(){
         let TempView = this.state.view

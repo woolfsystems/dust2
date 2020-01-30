@@ -32,29 +32,29 @@ class MenuList extends React.Component{
 export default class extends React.Component {
     static defaultProps = {
         pipes: { },
-        url: null,
+        url: '/',
         showLogin: false
     }
     constructor(props) {
       super(props)
-      let _surl = localStorage.getItem('url') || '/'
+      let _surl = localStorage.getItem('url')
+      try{
+          _surl = JSON.parse(_surl)
+      }catch(e){
+          _surl = '/'
+      }
       this.state = {
-          url: JSON.parse(_surl),
+          url: _surl,
           showLogin: props.showLogin
       }
     }
-    static getDerivedStateFromProps(props, state){
-        console.log(state)
-        return {
-            showLogin: props.showLogin,
-            url: props.url || '/'
-        }
-    }
+    
     route(url){
         localStorage.setItem('url',JSON.stringify(url))
         this.setState({url})
     }
     render(){
+        console.log('r',this.state)
         return (<React.Fragment>
                 <hgroup>
                     <h1>cast {this.state.showLogin?'LOGIN':''}</h1>
@@ -64,7 +64,7 @@ export default class extends React.Component {
                     <Router url={this.state.url} />
                 </section>
                 <footer>
-                    <span>fnord software limited &copy; 2020</span>
+                    <span>fnord &copy; 2020</span>
                 </footer>
             </React.Fragment>)
     }

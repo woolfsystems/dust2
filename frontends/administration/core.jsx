@@ -18,8 +18,8 @@ class ServiceError extends Error{
 class APIError extends Error{
 }
 
-const LOGIN_REJECTED = Symbol('User Rejected Login')
-const LOGIN_FAILED = Symbol('Login Failed')
+const LOGIN_REJECTED = 'User Rejected Login'
+const LOGIN_FAILED = 'Login Failed'
 
 const init = {
     url: '/',
@@ -48,7 +48,7 @@ var attemptLogin
 const login = (_pcall, _socket) => (_err) => new Promise((resolve, reject) =>
     attemptLogin(_socket)
         .then(authWrapper(_pcall, _socket))
-        .catch(_login_err =>reject(_login_err)))
+        .catch(reject))
 
 const authWrapper = (_pcall, _socket) => (_meta = {}) => new Promise((resolve, reject) =>
     _pcall(_socket)
@@ -167,11 +167,11 @@ export default class extends React.Component {
                 console.error('=>','[call]', e)
             })
     
-            this.call('postcode.lookup', { postcode:'nw2', token: 'bloopsssssss' })().then(r => {
-                console.log('=>','[call 2]', r)
-            }).catch(e => {
-                console.error('=>','[call 2]', e)
-            })
+            // this.call('postcode.lookup', { postcode:'nw2', token: 'bloopsssssss' })().then(r => {
+            //     console.log('=>','[call 2]', r)
+            // }).catch(e => {
+            //     console.error('=>','[call 2]', e)
+            // })
         })
     }
     showLogin(){
@@ -181,7 +181,7 @@ export default class extends React.Component {
         return new Promise((resolve, reject)=> {
             this.loginResolve = resolve
             this.loginReject = reject
-            setTimeout(()=>{
+            setTimeout(() => {
                 return confirm('Login?')
                     ? this.loginResolve()
                     : this.loginReject(new AuthenticationError(LOGIN_REJECTED))
@@ -196,9 +196,9 @@ export default class extends React.Component {
     }
     componentDidMount() {
         attemptLogin = (_socket) => new Promise((resolve, reject) =>
-            this.showLogin().catch(e=>{
+            this.showLogin().then(resolve).catch(e=>
                 this.hideLogin() && reject(e)
-            }))
+            ))
         this.connectIO()
         this.setupIO()
     }
