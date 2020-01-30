@@ -8,6 +8,19 @@ import SocketIOFileClient from 'socket.io-file-client'
 import CallStore from './lib/filter'
 import CoreView from './layout/core.jsx'
 
+
+class AuthenticationError extends Error{
+}
+class ApplicationError extends Error{
+}
+class ServiceError extends Error{
+}
+class APIError extends Error{
+}
+
+const LOGIN_REJECTED = Symbol('User Rejected Login')
+const LOGIN_FAILED = Symbol('Login Failed')
+
 const init = {
     url: '/',
     store: new CallStore()
@@ -171,7 +184,7 @@ export default class extends React.Component {
             setTimeout(()=>{
                 return confirm('Login?')
                     ? this.loginResolve()
-                    : this.loginReject(new Error('LOGIN_REJECTED'))
+                    : this.loginReject(new AuthenticationError(LOGIN_REJECTED))
             },1000)
         })
     }
