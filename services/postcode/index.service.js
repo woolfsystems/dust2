@@ -6,14 +6,28 @@ module.exports = {
 	roles: [ USER_TYPE_CLIENT ],
 
 	actions: {
-		async lookup(ctx) {
+		lookup(ctx) {
 			ctx.broker.logger.info('meta', ctx.meta, ctx.requestID)
 
 			ctx.broker.emit("postcode lookup", {
 				postcode: ctx.params.postcode
 			})
 
-			return await ctx
+			return ctx.broker.call("message.send", {
+				to: "hello@moleculer.services",
+				subject: "Hello Mailer",
+				//template: "welcome",
+				//locale: "hu-HU", // Localized e-mail template
+				// data: {
+				// 	name: "John Doe",
+				// 	username: "john.doe",
+				// 	verifyToken: "123456"
+				// }
+				from: "adam@email.com",
+				cc: "twoolf+testmail@gmail.com",
+				html: "This is a <b>moleculer-mail</b> demo!",
+				text: "This is the text part"
+			}).then(_r => ctx
 				.call('backend.postcodeLookup', ctx.params)
 				.then(response => {
 					ctx.broker.logger.info(response)
@@ -22,6 +36,7 @@ module.exports = {
 					ctx.broker.logger.error(error)
 					return error
 				})
+			)
 		}
 	}
 }

@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch:frontend": "parcel watch frontends/administration/index.html -d dist",
     "build:frontend": "parcel build frontends/administration/index.html -d dist",
-    "dust:run": "node core/broker/index.js"
+    "dust:start": "node core/broker/index.js"
   },
   "dependencies": {
     "@babel/core": "^7.8.3",
@@ -44,5 +44,8 @@
     "@model": "models",
     "@services": "services",
     "@core": "core"
+  },
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com/"
   }
 }

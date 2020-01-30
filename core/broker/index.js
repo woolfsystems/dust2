@@ -21,6 +21,7 @@ const loadService = (_BROKER, _SERVICE) =>
         if(!SERVICE_EXCLUSION_LIST.split(',').includes(_SERVICE)){
             let FN = path.join(SERVICE_DIR, `${String(_SERVICE).trim()}/index.service.js`)
             let _SVC = broker.loadService(FN)
+            
             broker.logger.info('Loaded', _SERVICE, FN)
             let deps = _SVC.dependencies || []
             resolve(Promise.all(deps.map(s =>

@@ -7,7 +7,7 @@ const EnvLoader = require('@lib/mixins/env.mixin')
 const { MoleculerError, MoleculerRetryableError } = require('moleculer').Errors
 
 const { USER_TYPE_ANON, USER_TYPE_CLIENT } = require('@model/role')
-const { User } = require('@model/user')
+const { User } = require('@model/user')	
 
 module.exports = {
 	dependencies: ['postcode','auth'],
@@ -22,7 +22,8 @@ module.exports = {
 				'/': {
 					authorization: true,
 					middlewares: [
-						// function ({client: { user }}, next) {
+						// function (ctx, next) {
+						// 	let {client: { user }} = ctx
 						// 	let error = user instanceof User
 						// 		? null
 						// 		: user
@@ -30,8 +31,11 @@ module.exports = {
 						// 	if (error) {
 						// 		return next(this.Promise.reject(new ForbiddenError('AUTH_MISSING', error)))
 						// 	}
-
-						// 	console.log('[AUTH]','ok', user, user.type)
+						// 	ctx.meta = {
+						// 		...ctx.meta,
+						// 		user
+						// 	}
+						// 	console.log('[AUTH]','ok', user, user.type, ctx)
 						// 	return next()
 						// }
 					],
@@ -53,10 +57,12 @@ module.exports = {
 							},
 							onBeforeCall: async function(ctx, socket, action, params, callOptions) {
 								ctx.meta.socketid = socket.id
+								ctx.meta.user = ctx.params.socket.client.user
+
 								if(ctx.meta.user instanceof User){
 									this.logger.info('Valid user')
 								}else{
-									this.logger.error('Invalid user')
+									this.logger.error('Invalid user',ctx.meta)
 									throw new ForbiddenError('BAD_AUTH',ctx.meta.user)
 								}
 							},
@@ -243,13 +249,13 @@ module.exports = {
 		 */
 		socketAuthorize(socket, eventHandler){
 			let accessToken = socket.handshake.query.token
-			if (!accessToken) {
+			if (accessToken) {
 				try{
 					return this.broker.call('auth.resolveToken', { accessToken }).then(user => {
 						return new User({
 							id: user.id,
 							type: USER_TYPE_CLIENT,
-							meta: {
+							data: {
 								email: user.email,
 								token: accessToken
 							}

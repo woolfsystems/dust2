@@ -6,10 +6,10 @@ module.exports = {
 	name: 'client',
 	dependencies: ['backend','pdf'],
 	actions: {
-		async generateContract(ctx) {
+		generateContract(ctx) {
 			ctx.broker.logger.info('meta',ctx.meta,ctx.requestID)
 
-            return await ctx
+            return ctx
                 .call('pdf.transform', { html: '<h1>Contract</h1>' })
                 .then(buff => {
                     //const filePath = path.join(this.uploadDir, ctx.params.file)
