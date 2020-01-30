@@ -32,19 +32,22 @@ class MenuList extends React.Component{
 export default class extends React.Component {
     static defaultProps = {
         pipes: { },
-        url: null
+        url: null,
+        showLogin: false
     }
     constructor(props) {
       super(props)
       let _surl = localStorage.getItem('url') || '/'
       this.state = {
-          url: JSON.parse(_surl)
+          url: JSON.parse(_surl),
+          showLogin: props.showLogin
       }
     }
     static getDerivedStateFromProps(props, state){
+        console.log(state)
         return {
-            ...props,
-            ...state
+            showLogin: props.showLogin,
+            url: props.url || '/'
         }
     }
     route(url){
@@ -54,7 +57,7 @@ export default class extends React.Component {
     render(){
         return (<React.Fragment>
                 <hgroup>
-                    <h1>cast</h1>
+                    <h1>cast {this.state.showLogin?'LOGIN':''}</h1>
                     <MenuList items={routes} route={this.route.bind(this)} selected={this.state.url} />
                 </hgroup>
                 <section id="content">
