@@ -47,6 +47,10 @@ export default class extends React.Component {
           url: _surl,
           showLogin: props.showLogin
       }
+
+      this.streams = {
+          modal: null
+      }
     }
     
     route(url){
@@ -55,9 +59,10 @@ export default class extends React.Component {
     }
     render(){
         console.log('r',this.state)
-        return (<React.Fragment>
+        return (
+            <React.Fragment>
                 <hgroup>
-                    <h1>cast {this.state.showLogin?'LOGIN':''}</h1>
+                    <h1>dust</h1>
                     <MenuList items={routes} route={this.route.bind(this)} selected={this.state.url} />
                 </hgroup>
                 <section id="content">

@@ -197,7 +197,7 @@ module.exports = {
 		],
 
 		assets: {
-			folder: "./dist",
+			folder: "./dist/administration/",
 			options: {}
 		},
 

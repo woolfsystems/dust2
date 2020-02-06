@@ -1,7 +1,7 @@
 import React from 'react'
 import Gantt from '/components/gantt.jsx'
 
-export default class EventView extends React.Component{
+export default class extends React.Component{
     static defaultProps = {
     }
     constructor(props) {

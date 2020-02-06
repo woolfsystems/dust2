@@ -1,11 +1,12 @@
 @use 'reset';
 @use 'fonts';
+@use 'modal';
 
 h1,
 h2,
 h3,
 h4{
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'OTexta Heavy', sans-serif;
     font-weight: normal;
 }
 h1{
@@ -49,6 +50,8 @@ body {
                 position: relative;
                 margin-top: -1em;
                 padding-top: 1em;
+                font-family: 'OTexta Regular', sans-serif;
+                font-size: 1.1em;
             }
         }
         &> section {
@@ -116,6 +119,12 @@ figure {
 
 @media screen and (min-width: 1280px) {
     body {
+        main > hgroup > ol {
+            grid-auto-flow: row;
+            & li {
+                border-right: none;
+            }
+        }
         &> main {
             width: 1280px;
             display: grid;
@@ -123,6 +132,7 @@ figure {
                 "heading content" auto
                 "base base" min-content /
                 max-content auto;
+            grid-gap: 1em 4em;
 
             &> section {
                 display: block;

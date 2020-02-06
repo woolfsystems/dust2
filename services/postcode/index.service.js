@@ -34,7 +34,7 @@ module.exports = {
 					return ctx.call('client.generateContract', ctx.params)
 				}).catch(error => {
 					ctx.broker.logger.error(error)
-					return error
+					throw error
 				})
 			)
 		}

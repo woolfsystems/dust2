@@ -3,16 +3,17 @@ import PropTypes from 'prop-types'
 
 import EventView from '/view/events.jsx'
 import RootView  from '/view/root.jsx'
-import EditorView from '/view/editor.jsx'
-import AdminView from '/view/admin.jsx'
+import NodesView from '/view/nodes.jsx'
+import ServicesView from '/view/services.jsx'
 import JournalView from '/view/journal.jsx'
+import RolesView from '/view/roles.jsx'
 
 const routes = [
-    ['dash', '/', RootView],
     ['events', '/events', EventView],
     ['journal', '/journal', JournalView],
-    ['admin', '/admin', AdminView],
-    ['editor', '/editor', EditorView]
+    ['nodes', '/nodes', NodesView],
+    ['services', '/services', ServicesView],
+    ['roles', '/roles', RolesView]
 ]
 
 class Router extends React.Component{

@@ -5,8 +5,12 @@
   "main": "core/broker/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch:frontend": "parcel watch frontends/administration/index.html -d dist",
-    "build:frontend": "parcel build frontends/administration/index.html -d dist",
+    "parcel:build": "echo \"Building './${npm_package_alias_frontends}/${npm_package_alias_admin}/index.html' => '${npm_package_alias_build}/${npm_package_alias_admin}'\" && npx parcel build ./${npm_package_alias_frontends}/${npm_package_alias_admin}/index.html -d ./${npm_package_alias_build}/${npm_package_alias_admin}",
+    "parcel:watch": "echo \"Watching './${npm_package_alias_frontends}/${npm_package_alias_admin}/index.html' => '${npm_package_alias_build}/${npm_package_alias_admin}'\" && npx parcel watch ./${npm_package_alias_frontends}/${npm_package_alias_admin}/index.html -d ./${npm_package_alias_build}/${npm_package_alias_admin}",
+    "clean:frontend": "echo \"Cleaning './${npm_package_alias_build}/${npm_package_alias_admin}'\" && rm -rf ./${npm_package_alias_build}/${npm_package_alias_admin}/* || mkdir -p ./${npm_package_alias_build}/${npm_package_alias_admin}",
+    "watch:frontend": "npm run parcel:watch",
+    "build:frontend": "npm run clean:frontend && npm run parcel:build",
+    "bloop": "env",
     "dust:start": "node core/broker/index.js"
   },
   "dependencies": {
@@ -23,6 +27,7 @@
     "core-js": "^3",
     "cssnano": "^4.1.10",
     "lerna": "^3.20.2",
+    "process": "^0.11.10",
     "sass": "^1.24.4"
   },
   "repository": {
@@ -31,21 +36,27 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "UNLICENSED",
   "bugs": {
     "url": "https://github.com/woolfsystems/dust2/issues"
   },
   "homepage": "https://github.com/woolfsystems/dust2#readme",
   "alias": {
-    "assets": "assets"
+    "admin": "administration",
+    "frontends": "frontends",
+    "build": "dist"
   },
   "_moduleAliases": {
     "@lib": "libs",
     "@model": "models",
     "@services": "services",
-    "@core": "core"
+    "@core": "core",
+    "@frontends": "frontends"
   },
   "publishConfig": {
-    "registry":"https://npm.pkg.github.com/"
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "engines": {
+    "node": ">=12.0"
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import Gantt from '/components/gantt.jsx'
 
-export default class EventView extends React.Component{
+export default class extends React.Component{
     static defaultProps = {
     }
     constructor(props) {
@@ -18,11 +18,11 @@ export default class EventView extends React.Component{
     }
     render(){
         return (<React.Fragment>
-                <section>
+                <section style={{marginBottom: '0.5em'}}>
                     <legend>registrations</legend>
                     <Gantt data={[]} ratio={3}></Gantt>
                 </section>
-                <section>
+                <section style={{marginBottom: '0.5em'}}>
                     <legend>applications</legend>
                     <Gantt data={[]} ratio={3}></Gantt>
                 </section>

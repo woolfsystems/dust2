@@ -76,14 +76,44 @@ if(window.sounds){
     }).toMaster();
 }
 
+class Modal extends React.Component {
+    static defaultProps = {
+        stream: null,
+        visible: true
+    }
+    constructor(props) {
+        super(props)
+        this.state = {
+            ...props
+        }
+    }
 
-const controller = {
+    static getDerivedStateFromProps(props, state){
+        console.log(props)
+        return Object.assign(
+            state,
+            props
+        )
+    }
 
+    render(){
+        return this.state.visible
+            ? (<div class="modal">
+                <div class="modal--content">
+                    <h2>login</h2>
+                    <p>please enter your details below</p>
+                    <input type="email" value={''} placeholder="email" />
+                    <input type="password" value={''} placeholder="password" />
+                    <button>submit to me</button>
+                </div>
+            </div>)
+            : (<div></div>)
+    }
 }
 
 export default class extends React.Component {
     static defaultProps = {
-        showLogin: false
+        showLogin: true
     }
     static propTypes = {
         showLogin: PropTypes.bool
@@ -203,6 +233,10 @@ export default class extends React.Component {
         this.setupIO()
     }
     render(){
-        return (<CoreView showLogin={this.state.showLogin} />)
+        return (
+            <React.Fragment>
+                <Modal visible={this.state.showLogin} />
+                <CoreView showLogin={this.state.showLogin} />
+            </React.Fragment>)
     }
 }

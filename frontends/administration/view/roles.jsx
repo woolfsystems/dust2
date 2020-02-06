@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default class RootView extends React.Component{
+export default class extends React.Component{
     static defaultProps = {
     }
     constructor(props) {
@@ -8,7 +8,7 @@ export default class RootView extends React.Component{
     }
     render(){
         return (<section>
-            <legend>admin</legend>
+            <legend>roles</legend>
             <article className="popover"></article>
         </section>)
     }
