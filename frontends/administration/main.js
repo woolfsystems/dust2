@@ -4,5 +4,5 @@ import Core from './core.jsx'
 
 ReactDOM.render(
     <Core />,
-    document.getElementById('app')
+    document.querySelector('body > main')
 )

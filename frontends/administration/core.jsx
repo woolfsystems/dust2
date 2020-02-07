@@ -7,19 +7,19 @@ import SocketIOFileClient from 'socket.io-file-client'
 
 import CallStore from './lib/filter'
 import CoreView from './layout/core.jsx'
+import ModalView from './layout/modal.jsx'
 
+import LoginModal from './components/modals/login.jsx'
 
-class AuthenticationError extends Error{
-}
-class ApplicationError extends Error{
-}
-class ServiceError extends Error{
-}
-class APIError extends Error{
-}
+import {
+    AuthenticationError,
+    ApplicationError,
+    ServiceError,
+    APIError,
 
-const LOGIN_REJECTED = 'User Rejected Login'
-const LOGIN_FAILED = 'Login Failed'
+    LOGIN_FAILED,
+    LOGIN_REJECTED
+} from './lib/errors.js'
 
 const init = {
     url: '/',
@@ -43,22 +43,25 @@ const actions = {
     }
 }
 
-var attemptLogin
+const login = (_pcall, _socket, _attempt_login) =>
+    (_err) =>
+        new Promise((resolve, reject) =>
+            _attempt_login(_socket)
+                .then(authWrapper(_pcall, _socket, _attempt_login))
+                .catch(reject))
 
-const login = (_pcall, _socket) => (_err) => new Promise((resolve, reject) =>
-    attemptLogin(_socket)
-        .then(authWrapper(_pcall, _socket))
-        .catch(reject))
+const authWrapper = (_pcall, _socket, _attempt_login) =>
+    (_meta = {}) =>
+        new Promise((resolve, reject) =>
+            _pcall(_socket)
+                .catch(login(_pcall, _socket, _attempt_login)))
 
-const authWrapper = (_pcall, _socket) => (_meta = {}) => new Promise((resolve, reject) =>
-    _pcall(_socket)
-        .catch(login(_pcall,_socket)))
-
-const socketCall = (_call, _meta) => (_socket) => new Promise((resolve, reject) => {
-    _socket.emit('clientCall', _call, _meta, (_e, _r) => _e
-        ? reject(_e)
-        : resolve(_r))
-})
+const socketCall = (_call, _meta) =>
+    (_socket) =>
+        new Promise((resolve, reject) =>
+            _socket.emit('clientCall', _call, _meta, (_e, _r) => _e
+                ? reject(_e)
+                : resolve(_r)))
 
 let synth
 if(window.sounds){
@@ -76,62 +79,25 @@ if(window.sounds){
     }).toMaster();
 }
 
-class Modal extends React.Component {
-    static defaultProps = {
-        stream: null,
-        visible: true
-    }
+export default class extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            ...props
+            modal: {
+                promise: null,
+                show: false,
+                component: undefined
+            }
         }
     }
-
-    static getDerivedStateFromProps(props, state){
-        console.log(props)
-        return Object.assign(
-            state,
-            props
-        )
-    }
-
-    render(){
-        return this.state.visible
-            ? (<div class="modal">
-                <div class="modal--content">
-                    <h2>login</h2>
-                    <p>please enter your details below</p>
-                    <input type="email" value={''} placeholder="email" />
-                    <input type="password" value={''} placeholder="password" />
-                    <button>submit to me</button>
-                </div>
-            </div>)
-            : (<div></div>)
-    }
-}
-
-export default class extends React.Component {
-    static defaultProps = {
-        showLogin: true
-    }
-    static propTypes = {
-        showLogin: PropTypes.bool
-    }
-    constructor(props) {
-      super(props)
-      this.state = {
-          ...props
-      }
+    call(_call, _meta) {
+        return authWrapper(socketCall(_call, _meta), this.socket, this.attemptLogin.bind(this))
     }
     connectIO(){
         try{
             this.socket = io('localhost:4000', {
                 reconnection: true,
             })
-        
-            this.call = (_call, _meta) =>
-                authWrapper(socketCall(_call, _meta), this.socket)
         
             // const uploader = SocketIOFileClient(socket)
         
@@ -205,38 +171,49 @@ export default class extends React.Component {
         })
     }
     showLogin(){
-        this.setState(state => ({
-            showLogin: true
-        }))
+        document.querySelector('body > main')
+            .setAttribute('modal', true)
         return new Promise((resolve, reject)=> {
-            this.loginResolve = resolve
-            this.loginReject = reject
-            setTimeout(() => {
-                return confirm('Login?')
-                    ? this.loginResolve()
-                    : this.loginReject(new AuthenticationError(LOGIN_REJECTED))
-            },1000)
+            this.setState(state => ({
+                modal: {
+                    show: true,
+                    promise: {
+                        resolve,
+                        reject
+                    },
+                    component: LoginModal
+                }
+            }))
         })
     }
     hideLogin(){
+        document.querySelector('body > main')
+            .setAttribute('modal', false)
         this.setState(state => ({
-            showLogin: false
+            modal: {
+                show: false
+            }
         }))
     return true
     }
+    attemptLogin(){
+        return new Promise((resolve, reject) =>
+            this.showLogin()
+                .then(_v =>
+                    this.hideLogin() && resolve(_v))
+                .catch(_e =>
+                    this.hideLogin() && reject(_e)))
+    }
     componentDidMount() {
-        attemptLogin = (_socket) => new Promise((resolve, reject) =>
-            this.showLogin().then(resolve).catch(e=>
-                this.hideLogin() && reject(e)
-            ))
+        
         this.connectIO()
         this.setupIO()
     }
     render(){
         return (
-            <React.Fragment>
-                <Modal visible={this.state.showLogin} />
-                <CoreView showLogin={this.state.showLogin} />
-            </React.Fragment>)
+        <React.Fragment>
+            <ModalView visible={this.state.modal.show} promise={this.state.modal.promise} component={this.state.modal.component} />
+            <CoreView />
+        </React.Fragment>)
     }
 }

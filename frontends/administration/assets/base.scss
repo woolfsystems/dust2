@@ -14,7 +14,7 @@ h1{
     color: #222;
 }
 h2{
-    font-size: 1.5em;
+    font-size: 2em;
     color: #333;
 }
 
@@ -24,7 +24,7 @@ body {
     background-color: #eee;
     color: #111;
 
-    &> main {
+    & > main > section#content {
         display: grid;
         grid:
             "heading" min-content
@@ -119,13 +119,13 @@ figure {
 
 @media screen and (min-width: 1280px) {
     body {
-        main > hgroup > ol {
+        &> section#content > hgroup > ol {
             grid-auto-flow: row;
             & li {
                 border-right: none;
             }
         }
-        &> main {
+        &> section#content {
             width: 1280px;
             display: grid;
             grid-template:
@@ -143,7 +143,7 @@ figure {
 
 @media screen and (max-width: 1024px) {
     body{
-        &> main {
+        & > main > section#content {
             width: 100vw;
 
             &> section {
@@ -159,13 +159,14 @@ a{
     color: inherit;
 }
 
-hgroup ol{
+hgroup ol {
     list-style: none;
     display: grid;
     grid-auto-flow: column;
     width: min-content;
     gap: 0.25em;
-    & li{
+    
+    & li {
         color: #444;
         line-height: 1em;
         height: 1em;
@@ -177,14 +178,24 @@ hgroup ol{
         transition: text-decoration 500ms ease;
         text-decoration: transparent underline;
 
-        &:last-child{
+        &:last-child {
             border-right: none;
             padding-right: 0;
         }
-        &.selected{
-            color: #333;
-            text-decoration: red underline;
+
+        &.selected,
+        &:hover {
+            text-decoration-style: underline;
             transition: text-decoration 500ms ease;
+        }
+        
+        &.selected {
+            color: #333;
+            text-decoration-color: red;
+        }
+        
+        &:hover {
+            text-decoration-color: blue;
         }
     }
 }

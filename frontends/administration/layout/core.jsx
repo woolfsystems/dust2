@@ -32,8 +32,7 @@ class MenuList extends React.Component{
 export default class extends React.Component {
     static defaultProps = {
         pipes: { },
-        url: '/',
-        showLogin: false
+        url: '/'
     }
     constructor(props) {
       super(props)
@@ -44,8 +43,7 @@ export default class extends React.Component {
           _surl = '/'
       }
       this.state = {
-          url: _surl,
-          showLogin: props.showLogin
+          url: _surl
       }
 
       this.streams = {
@@ -60,7 +58,7 @@ export default class extends React.Component {
     render(){
         console.log('r',this.state)
         return (
-            <React.Fragment>
+            <section id="content">
                 <hgroup>
                     <h1>dust</h1>
                     <MenuList items={routes} route={this.route.bind(this)} selected={this.state.url} />
@@ -71,6 +69,6 @@ export default class extends React.Component {
                 <footer>
                     <span>fnord &copy; 2020</span>
                 </footer>
-            </React.Fragment>)
+            </section>)
     }
 }
