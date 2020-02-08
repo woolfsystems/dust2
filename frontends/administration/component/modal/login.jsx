@@ -46,7 +46,7 @@ export default class extends React.Component {
 
     render(){
         return (
-        <fieldset className="modal--content">
+        <fieldset className="modal--content types--modal--login">
             <h2>login</h2>
             <p>please enter your details below</p>
             <form>

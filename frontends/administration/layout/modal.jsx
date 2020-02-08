@@ -55,8 +55,8 @@ export default class extends React.Component {
             ? this.props.component
             : ()=>(<div/>)
         return (
-        <section id="modal">
+        <layer id="modal">
             <ModalPromise promise={this.props.promise} />
-        </section>)
+        </layer>)
     }
 }

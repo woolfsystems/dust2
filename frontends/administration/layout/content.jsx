@@ -57,19 +57,18 @@ export default class extends React.Component {
         this.setState({url})
     }
     render(){
-        console.log('r',this.state)
         return (
+        <layer id="content">
+            <hgroup>
+                <h1>dust</h1>
+                <MenuList items={routes} route={this.route.bind(this)} selected={this.state.url} />
+            </hgroup>
             <section id="content">
-                <hgroup>
-                    <h1>dust</h1>
-                    <MenuList items={routes} route={this.route.bind(this)} selected={this.state.url} />
-                </hgroup>
-                <section id="content">
-                    <Router url={this.state.url} />
-                </section>
-                <footer>
-                    <span>fnord &copy; 2020</span>
-                </footer>
-            </section>)
+                <Router url={this.state.url} />
+            </section>
+            <footer>
+                <span>fnord &copy; 2020</span>
+            </footer>
+        </layer>)
     }
 }

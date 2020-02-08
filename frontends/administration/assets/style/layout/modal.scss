@@ -2,11 +2,11 @@ body {
     & > main[modal=true] {
         overflow: hidden;
 
-        & > section#content{
+        & > layer#content{
             filter: blur(2px);
             transition: 1s ease filter;
         }
-        & > section#modal{
+        & > layer#modal{
             opacity: 1;
             pointer-events: auto;
             
@@ -18,7 +18,7 @@ body {
     }
 
     & > main {
-        & > section#modal {
+        & > layer#modal {
             opacity: 0;
             position: fixed;
             display: block;

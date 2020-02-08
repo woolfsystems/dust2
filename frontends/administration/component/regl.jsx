@@ -226,6 +226,9 @@ export default class Regl extends React.Component {
         })
         this.resize() && window.addEventListener('resize', this.resize.bind(this))
     }
+    onSize(){
+        console.log('SIZE')
+    }
     resize(){
         let _p = this.el.current
         try{

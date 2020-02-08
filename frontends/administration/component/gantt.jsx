@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Hammer from 'react-hammerjs'
+import { withSize } from 'react-sizeme'
 
 import Regl from './regl.jsx'
 
-
-export default class Gantt extends Regl {
+class Gantt extends Regl {
     static defaultProps = {
         data: [],
         ratio: 2
@@ -27,9 +27,9 @@ export default class Gantt extends Regl {
     render(){
         return (<Hammer onSwipe={this.handleSwipe}>
         <article className={"popout"}>
-            
                 <canvas ref={this.el} style={{opacity: 0}}></canvas>
-            
         </article></Hammer>)
     }
 }
+
+export default Gantt
