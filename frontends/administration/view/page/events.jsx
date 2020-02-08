@@ -1,5 +1,5 @@
 import React from 'react'
-import Gantt from '~/component/gantt.jsx'
+import Gantt from '~/view/component/gantt.jsx'
 
 export default class extends React.Component{
     static defaultProps = {
@@ -17,7 +17,8 @@ export default class extends React.Component{
         )
     }
     render(){
-        return (<section>
+        return (
+        <section>
             <legend>requests</legend>
             <Gantt data={[]} ratio={3}></Gantt>
         </section>)

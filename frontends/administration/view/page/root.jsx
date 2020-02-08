@@ -7,7 +7,8 @@ export default class extends React.Component{
       super(props)
     }
     render(){
-        return (<section>
+        return (
+        <section>
             <legend>overview</legend>
             <article className="popover"></article>
         </section>)

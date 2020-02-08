@@ -11,7 +11,7 @@ import {
 
     LOGIN_FAILED,
     LOGIN_REJECTED
-} from '../../lib/errors.js'
+} from '~/lib/errors.js'
 
 export default class extends React.Component {
     static defaultProps = {

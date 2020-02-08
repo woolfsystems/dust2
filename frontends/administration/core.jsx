@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import '~/view/element/layer.js'
 import '~/assets/style/core.scss'
 
 import io from 'socket.io-client'
@@ -9,10 +10,10 @@ import SocketIOFileClient from 'socket.io-file-client'
 
 import CallStore from '~/lib/filter'
 
-import CoreView from '~/layout/content.jsx'
-import ModalView from '~/layout/modal.jsx'
+import CoreView from '~/view/layout/content.jsx'
+import ModalView from '~/view/layout/modal.jsx'
 
-import LoginModal from '~/component/modal/login.jsx'
+import LoginModal from '~/view/component/modal/login.jsx'
 
 const init = {
     url: '/',

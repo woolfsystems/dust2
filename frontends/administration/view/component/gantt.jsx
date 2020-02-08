@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Hammer from 'react-hammerjs'
-import { withSize } from 'react-sizeme'
 
 import Regl from './regl.jsx'
 

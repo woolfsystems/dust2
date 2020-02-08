@@ -3,16 +3,6 @@ import PropTypes from 'prop-types'
 
 import '~/assets/style/layout/modal.scss'
 
-import {
-    AuthenticationError,
-    ApplicationError,
-    ServiceError,
-    APIError,
-
-    LOGIN_FAILED,
-    LOGIN_REJECTED
-} from '../lib/errors.js'
-
 export default class extends React.Component {
     static defaultProps = {
         stream: null,
@@ -23,8 +13,11 @@ export default class extends React.Component {
     static propTypes = {
         stream: PropTypes.any,
         visible: PropTypes.bool,
-        promise: PropTypes.object,
-        component: PropTypes.any
+        promise: PropTypes.shape({
+            resolve: PropTypes.func,
+            reject: PropTypes.func
+        }),
+        component: PropTypes.elementType
     }
     constructor(props) {
         super(props)
@@ -43,20 +36,13 @@ export default class extends React.Component {
         )
     }
 
-    submit(_e){
-        this.props.promise.resolve(_e)
-    }
-    cancel(){
-        this.props.promise.reject(LOGIN_REJECTED)
-    }
-
     render(){
         let ModalPromise = (typeof this.props.component !== 'undefined')
             ? this.props.component
             : ()=>(<div/>)
         return (
-        <layer id="modal">
+        <view-layer id="modal">
             <ModalPromise promise={this.props.promise} />
-        </layer>)
+        </view-layer>)
     }
 }

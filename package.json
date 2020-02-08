@@ -27,7 +27,6 @@
     "core-js": "^3",
     "cssnano": "^4.1.10",
     "lerna": "^3.20.2",
-    "process": "^0.11.10",
     "sass": "^1.24.4"
   },
   "repository": {

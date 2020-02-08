@@ -1,5 +1,5 @@
 body {
-    & > main > layer#content {
+    & > main > view-layer#content {
         display: grid;
         grid:
             "heading" min-content

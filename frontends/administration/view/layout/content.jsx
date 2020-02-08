@@ -58,7 +58,7 @@ export default class extends React.Component {
     }
     render(){
         return (
-        <layer id="content">
+        <view-layer id="content">
             <hgroup>
                 <h1>dust</h1>
                 <MenuList items={routes} route={this.route.bind(this)} selected={this.state.url} />
@@ -69,6 +69,6 @@ export default class extends React.Component {
             <footer>
                 <span>fnord &copy; 2020</span>
             </footer>
-        </layer>)
+        </view-layer>)
     }
 }
