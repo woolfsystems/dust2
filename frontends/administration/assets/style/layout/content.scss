@@ -27,6 +27,7 @@ body {
                 padding-top: 1em;
                 font-family: 'OTexta Regular', sans-serif;
                 font-size: 1.1em;
+                text-transform: lowercase;
             }
         }
         &> section {
@@ -164,7 +165,7 @@ hgroup ol {
 
         &.selected,
         &:hover {
-            text-decoration-style: underline;
+            text-decoration: underline;
             transition: text-decoration 500ms ease;
         }
         

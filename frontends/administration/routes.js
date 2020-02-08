@@ -10,7 +10,7 @@ import JournalView from '~/view/page/journal.jsx'
 import RolesView from '~/view/page/roles.jsx'
 
 const SITE_TITLE = 'Dust/Cast'
-const SITE_URL = 'http://localhost:4000/'
+const SITE_URL = 'http://localhost:4000'
 
 const routes = [
     ['Events', '/events', EventView],
@@ -59,7 +59,11 @@ class Router extends React.Component{
         <React.Fragment>
             <Helmet titleTemplate={`${SITE_TITLE} - %s`} defaultTitle={SITE_TITLE}>
                 <title>{this.state.title}</title>
-                <base target="_blank" href={SITE_URL} />
+                <meta charSet="utf-8" />
+
+                <base target="_blank" href={`${SITE_URL}/`} />
+                <link rel="canonical" href={`${SITE_URL}${this.state.url}`} />
+
                 <meta name="description" content="Distributed uninterruptable service tree" />
             </Helmet>
             <TempView key={this.state.url} />
