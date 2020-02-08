@@ -1,0 +1,16 @@
+@use 'reset';
+@use 'fonts';
+@use 'type';
+
+body {
+    background-color: #eee;
+    color: #111;
+}
+
+.transparent {
+    opacity: 0;
+}
+
+.from-transparent {
+    opacity: 1;
+}

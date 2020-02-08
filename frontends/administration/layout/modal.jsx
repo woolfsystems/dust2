@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import '~/assets/style/layout/modal.scss'
+
 import {
     AuthenticationError,
     ApplicationError,

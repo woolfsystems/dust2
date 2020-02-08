@@ -1,5 +1,5 @@
 import React from 'react'
-import Gantt from '/components/gantt.jsx'
+import Gantt from '~/component/gantt.jsx'
 
 export default class extends React.Component{
     static defaultProps = {

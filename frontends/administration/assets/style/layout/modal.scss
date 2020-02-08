@@ -1,0 +1,44 @@
+body {
+    & > main[modal=true] {
+        overflow: hidden;
+
+        & > section#content{
+            filter: blur(2px);
+            transition: 1s ease filter;
+        }
+        & > section#modal{
+            opacity: 1;
+            pointer-events: auto;
+            
+            & > fieldset.modal--content {
+                transition: 500ms ease top;
+                top: 0;
+            }
+        }
+    }
+
+    & > main {
+        & > section#modal {
+            opacity: 0;
+            position: fixed;
+            display: block;
+            pointer-events: none;
+            transition: 500ms ease opacity;
+
+            left: 0;
+            top: 0;
+            bottom: 0;
+            right: 0;
+
+            background-color: rgba(0,0,0,0.8);
+            z-index: 1000;
+
+            & > fieldset.modal--content {
+                position: relative;
+                transition: 500ms ease top;
+                top: -100%;
+                border-style: none;
+            }
+        }
+    }
+}

@@ -1,25 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import '~/assets/style/core.scss'
+
 import io from 'socket.io-client'
 import Tone from 'tone'
 import SocketIOFileClient from 'socket.io-file-client'
 
-import CallStore from './lib/filter'
-import CoreView from './layout/core.jsx'
-import ModalView from './layout/modal.jsx'
+import CallStore from '~/lib/filter'
 
-import LoginModal from './components/modals/login.jsx'
+import CoreView from '~/layout/content.jsx'
+import ModalView from '~/layout/modal.jsx'
 
-import {
-    AuthenticationError,
-    ApplicationError,
-    ServiceError,
-    APIError,
-
-    LOGIN_FAILED,
-    LOGIN_REJECTED
-} from './lib/errors.js'
+import LoginModal from '~/component/modal/login.jsx'
 
 const init = {
     url: '/',

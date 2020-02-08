@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import "~/assets/style/component/modal/login.scss"
+
 import {
     AuthenticationError,
     ApplicationError,
@@ -44,14 +46,16 @@ export default class extends React.Component {
 
     render(){
         return (
-        <div className="modal--content">
+        <fieldset className="modal--content">
             <h2>login</h2>
             <p>please enter your details below</p>
-            <input type="email" defaultValue={this.state.user} placeholder="email" />
-            <input type="password" defaultValue={this.state.pass} placeholder="password" />
-            <button className="ok" onClick={this.submit.bind(this)}>submit</button>
-            <button className="cancel" onClick={this.cancel.bind(this)}>cancel</button>
-        </div>)
+            <form>
+                <input type="email" defaultValue={this.state.user} placeholder="email" />
+                <input type="password" defaultValue={this.state.pass} placeholder="password" />
+            </form>
+            <button className="resolve" onClick={this.submit.bind(this)}>submit</button>
+            <button className="reject" onClick={this.cancel.bind(this)}>cancel</button>
+        </fieldset>)
     }
 }
 

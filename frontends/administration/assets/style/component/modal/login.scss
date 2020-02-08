@@ -1,0 +1,43 @@
+main > section#modal > fieldset.modal--content.login {
+    display: grid;
+    width: min-content;
+    height: auto;
+
+    grid-auto-flow: row;
+    grid-gap: 0.25em;
+
+    background-color: #ffe88c;
+    color: #00f;
+    margin: auto;
+    padding: 1em;
+    box-shadow: 0px 0px 5px #000a;
+    font-family: 'OTexta Regular';
+
+    & h2 {
+        font-size: 2em;
+        color: #333;
+    }
+
+    & p {
+        font-size: 0.8em;
+        display: block;
+        padding: 0.2em 0;
+    }
+
+    & > button,
+    & input {
+        padding: 0.4em 0.6em;
+    }
+
+    & > button {
+        cursor: pointer;
+
+        &.resolve {
+            background: #111;
+            color: yellow;
+        }
+        &.reject {
+        
+        }
+    }
+}

@@ -1,6 +1,7 @@
 import React from 'react'
 
-import '/assets/base.scss'
+import '~/assets/style/layout/content.scss'
+
 import { Router, routes } from '/routes.js'
 
 

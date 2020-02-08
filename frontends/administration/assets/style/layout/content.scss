@@ -1,28 +1,5 @@
-@use 'reset';
-@use 'fonts';
-@use 'modal';
-
-h1,
-h2,
-h3,
-h4{
-    font-family: 'OTexta Heavy', sans-serif;
-    font-weight: normal;
-}
-h1{
-    font-size: 2.5em;
-    color: #222;
-}
-h2{
-    font-size: 2em;
-    color: #333;
-}
-
 body {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 20px;
-    background-color: #eee;
-    color: #111;
+
 
     & > main > section#content {
         display: grid;
@@ -165,7 +142,7 @@ hgroup ol {
     grid-auto-flow: column;
     width: min-content;
     gap: 0.25em;
-    
+
     & li {
         color: #444;
         line-height: 1em;
@@ -198,12 +175,4 @@ hgroup ol {
             text-decoration-color: blue;
         }
     }
-}
-
-.transparent {
-    opacity: 0;
-}
-
-.from-transparent {
-    opacity: 1;
 }
