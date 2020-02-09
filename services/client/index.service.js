@@ -14,6 +14,7 @@ module.exports = {
                 .then(buff => {
                     //const filePath = path.join(this.uploadDir, ctx.params.file)
                     const filePath = './contract.pdf'
+                                    return fs.createReadStream(`/tmp/${ctx.params.filename}`);
                     return writeFileAsync(filePath, buff).then(_r => {
                         if (!fs.existsSync(filePath))
                             return new NotFoundError()
@@ -23,12 +24,12 @@ module.exports = {
                     })
                     .catch(error => {
                         ctx.broker.logger.error(error)
-					    return error
+					    throw error
                     })
                 })
                 .catch(error => {
 					ctx.broker.logger.error(error)
-					return error
+					throw error
 				})
 		}
 	}

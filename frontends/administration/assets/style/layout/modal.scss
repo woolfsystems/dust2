@@ -1,12 +1,10 @@
 body {
-    & > main[modal=true] {
-        overflow: hidden;
-
-        & > view-layer#content{
+    & > main {
+        & > view-layer#modal.visible + view-layer#content{
             filter: blur(2px);
             transition: 1s ease filter;
         }
-        & > view-layer#modal{
+        & > view-layer#modal.visible{
             opacity: 1;
             pointer-events: auto;
             

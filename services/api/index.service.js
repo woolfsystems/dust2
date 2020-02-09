@@ -1,10 +1,12 @@
 const fs = require('fs')
+const path = require('path')
 const dotenv = require('dotenv')
-const { ForbiddenError, UnAuthorizedError, ERR_NO_TOKEN, ERR_INVALID_TOKEN, ERR_UNABLE_DECODE_PARAM } = require('moleculer-web/src/errors')
+const { ForbiddenError, UnAuthorizedError, NotFoundError, ERR_NO_TOKEN, ERR_INVALID_TOKEN, ERR_UNABLE_DECODE_PARAM } = require('moleculer-web/src/errors')
 const ApiGateway = require('moleculer-web')
 const SocketIOService = require('moleculer-io')
 const EnvLoader = require('@lib/mixins/env.mixin')
 const { MoleculerError, MoleculerRetryableError } = require('moleculer').Errors
+
 
 const { USER_TYPE_ANON, USER_TYPE_CLIENT } = require('@model/role')
 const { User } = require('@model/user')	
@@ -13,10 +15,7 @@ module.exports = {
 	dependencies: ['postcode','auth'],
 	mixins: [ApiGateway, SocketIOService, EnvLoader],
 	settings: {
-		// https: {
-		// 	key: fs.readFileSync(path.join(__dirname, "../ssl/key.pem")),
-		// 	cert: fs.readFileSync(path.join(__dirname, "../ssl/cert.pem"))
-		// },
+
 		io: {
 			namespaces: {
 				'/': {
@@ -98,7 +97,7 @@ module.exports = {
 					"$node.*"
 				],
 				cors: {
-					origin: ["https://localhost:3000", `${process.env.HTTP_SERVER_HOST}:${process.env.HTTP_SERVER_PORT}`],
+					origin: ["https://localhost:3000"],
 					methods: ["GET", "OPTIONS", "POST"],
 				},
 				authorization: true,
@@ -197,14 +196,14 @@ module.exports = {
 		],
 
 		assets: {
-			folder: "./dist/administration/",
-			options: {}
+			//folder: ,
+			options: {
+			}
 		},
-
 		onError(req, res, err) {
-			res.setHeader("Content-Type", "text/plain")
 			res.writeHead(err.code || 500)
-			res.end("Global error: " + err.message)
+			return res.end(this.settings.cache.error[err.code]
+				|| this.settings.cache.error.default)
 		},
 
 		log4XXResponses: true,
@@ -237,9 +236,30 @@ module.exports = {
 		config(){
 			this.settings.port = this.env.PORT || 9000
 			this.settings.ip = this.env.HOST || '127.0.0.1'
+			this.settings.assets.folder = path.resolve(this.env.npm_package_alias_build, this.env.ADMIN_FRONTEND)
+			this.settings.routes.map(_route =>
+				_route.cors && _route.cors.origin.push(`${process.env.HTTP_SERVER_HOST}:${process.env.HTTP_SERVER_PORT}`))
+			this.settings.cache = {
+				index: fs.readFileSync(path.resolve(this.settings.assets.folder, 'index.html')),
+				error: {
+					404: fs.readFileSync(path.resolve(this.settings.assets.folder, 'error.html')),
+					default: fs.readFileSync(path.resolve(this.settings.assets.folder, 'error.html'))
+				}
+			}
 			this.broker.logger.info(this.name, 'Applied configuration')
 		},
+		send404(req, res) {
+			if (req.$next)
+				return req.$next()
 
+			res.setHeader('Content-Type', 'text/html; charset=UTF-8')
+			if (req.url.indexOf('.') === -1) {
+				this.logger.info("Redirect to '/index.html'", req.url)
+				return res.end(this.settings.cache.index)
+				//return this.broker.call('api.rest',res,{url:'/',...req})
+			}
+			this.sendError(req, res, new NotFoundError())
+		},
 		/**
 		 * Authorize the socket
 		 *

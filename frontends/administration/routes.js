@@ -13,7 +13,7 @@ const SITE_TITLE = 'Dust/Cast'
 const SITE_URL = 'http://localhost:4000'
 
 const routes = [
-    ['Events', '/events', EventView],
+    ['Events', {pathname: '/events', state: {login: true}}, EventView],
     ['Journal', '/journal', JournalView],
     ['Nodes', '/nodes', NodesView],
     ['Services', '/services', ServicesView],
@@ -23,11 +23,13 @@ const routes = [
 class Router extends React.Component{
     static defaultProps = {
         url: '/',
+        state: {},
         title: '',
         view: undefined
 	}
 	static propTypes = {
         url: PropTypes.string,
+        state: PropTypes.object,
         title: PropTypes.string,
         view: PropTypes.elementType
     }
@@ -38,12 +40,14 @@ class Router extends React.Component{
             ...props
         }
     }
-    static getDerivedStateFromProps({url}, state) {
+    static getDerivedStateFromProps(props, state) {
+        let {url} = props
         let _lookup = routes.find(([,_url]) =>
-                url === _url)
+                url === (_url.pathname || _url))
+        console.log('STATE',props.state || 'ns')
         return typeof _lookup !== 'undefined'
             ? {
-                url,
+                url: url,
                 view: _lookup[2],
                 title: _lookup[0]
             }

@@ -2,47 +2,45 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import '~/assets/style/layout/modal.scss'
+import modals from "../component/modal/*.jsx"
 
 export default class extends React.Component {
     static defaultProps = {
         stream: null,
-        visible: false,
-        promise: {},
-        component: undefined
+        location: {}
     }
     static propTypes = {
         stream: PropTypes.any,
-        visible: PropTypes.bool,
-        promise: PropTypes.shape({
-            resolve: PropTypes.func,
-            reject: PropTypes.func
-        }),
-        component: PropTypes.elementType
+        location: PropTypes.object
     }
+    static storyProps = [
+        'visible'
+    ]
+
     constructor(props) {
         super(props)
         this.state = {
-            ...props,
-            user: '',
-            pass: ''
+            visible: false
         }
     }
-
     static getDerivedStateFromProps(props, state){
-        console.log(props)
-        return Object.assign(
-            state,
-            props
-        )
+        if(typeof props.location.state.modal!=='undefined' && props.location.state.modal.show)
+            return {
+                visible: true,
+                component: modals[props.location.state.modal.view].default,
+                channel: new BroadcastChannel(props.location.state.channel)
+            }
+        return {
+            visible: false
+        }
     }
-
     render(){
-        let ModalPromise = (typeof this.props.component !== 'undefined')
-            ? this.props.component
-            : ()=>(<div/>)
+        let ModalPromise = this.state.visible
+            ? this.state.component
+            : ()=>(<div></div>)
         return (
-        <view-layer id="modal">
-            <ModalPromise promise={this.props.promise} />
+        <view-layer id="modal" class={this.state.visible && 'visible'}>
+            <ModalPromise channel={this.state.channel} />
         </view-layer>)
     }
 }

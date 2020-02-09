@@ -1,7 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { Route, Router, BrowserRouter } from 'react-router-dom'
+
+import { createBrowserHistory } from "history";
+
+import 'setimmediate'
+
 import '~/view/element/layer.js'
+import '~/view/element/input.js'
 import '~/assets/style/core.scss'
 
 import io from 'socket.io-client'
@@ -15,26 +22,11 @@ import ModalView from '~/view/layout/modal.jsx'
 
 import LoginModal from '~/view/component/modal/login.jsx'
 
+let loop = 1
+
 const init = {
     url: '/',
     store: new CallStore()
-}
-const events = {
-    'route': (state, actions) => {
-        console.log('route',)
-    }
-}
-const actions = {
-    route: (state, url, data, emit) => {
-        console.log('a',url,data,emit)
-        return ({
-        ...state,
-        url
-    })},
-    call(state, action) {
-        console.log('call',action)
-    return state
-    }
 }
 
 const login = (_pcall, _socket, _attempt_login) =>
@@ -77,8 +69,9 @@ export default class extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            history: createBrowserHistory(),
             modal: {
-                promise: null,
+                promise: { resolve:null, reject:null },
                 show: false,
                 component: undefined
             }
@@ -165,29 +158,36 @@ export default class extends React.Component {
         })
     }
     showLogin(){
-        document.querySelector('body > main')
-            .setAttribute('modal', true)
-        return new Promise((resolve, reject)=> {
-            this.setState(state => ({
-                modal: {
-                    show: true,
-                    promise: {
-                        resolve,
-                        reject
+        console.info('[MODAL]','show')
+        return new Promise((resolve, reject) => {
+            let _cid = 'ch_'+(loop++)
+            let _c = new BroadcastChannel(_cid)
+            _c.onmessage = function ({data}) {
+                let [_status, _data] = JSON.parse(data)
+                _c.close()
+                if(_status === 'resolve')
+                    resolve(_data)
+                else
+                    reject(_data)
+            }
+            this.state.history.push({
+                state: {
+                    modal: {
+                        show: true,
+                        view: 'login'
                     },
-                    component: LoginModal
+                    channel: _cid
                 }
-            }))
+            })
         })
     }
     hideLogin(){
-        document.querySelector('body > main')
-            .setAttribute('modal', false)
-        this.setState(state => ({
-            modal: {
-                show: false
+        console.info('[MODAL]','hide')
+        this.state.history.push({
+            state: {
+                modal: { show: false }
             }
-        }))
+        })
     return true
     }
     attemptLogin(){
@@ -199,15 +199,14 @@ export default class extends React.Component {
                     this.hideLogin() && reject(_e)))
     }
     componentDidMount() {
-        
         this.connectIO()
         this.setupIO()
     }
     render(){
         return (
-        <React.Fragment>
-            <ModalView visible={this.state.modal.show} promise={this.state.modal.promise} component={this.state.modal.component} />
+        <Router history={this.state.history}>
+            <Route component={ModalView} />
             <CoreView />
-        </React.Fragment>)
+        </Router>)
     }
 }

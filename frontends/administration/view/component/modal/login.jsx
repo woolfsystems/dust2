@@ -9,23 +9,24 @@ import {
     ServiceError,
     APIError,
 
+    LOGIN_OK,
     LOGIN_FAILED,
     LOGIN_REJECTED
 } from '~/lib/errors.js'
 
 export default class extends React.Component {
     static defaultProps = {
-        promise: {}
+        channel: {}
     }
     static propTypes = {
-        promise: PropTypes.object
+        channel: PropTypes.object
     }
     constructor(props) {
         super(props)
         this.state = {
             ...props,
-            user: '',
-            pass: ''
+            user: 'blah',
+            pass: 'foop'
         }
     }
 
@@ -36,12 +37,15 @@ export default class extends React.Component {
             props
         )
     }
+    message(...args){
+        return this.props.channel.postMessage(JSON.stringify(args))
+    }
 
     submit(_e){
-        this.props.promise.resolve(_e)
+        this.message('resolve', LOGIN_OK)
     }
     cancel(){
-        this.props.promise.reject(LOGIN_REJECTED)
+        this.message('reject', LOGIN_REJECTED)    
     }
 
     render(){
@@ -50,8 +54,8 @@ export default class extends React.Component {
             <h2>login</h2>
             <p>please enter your details below</p>
             <form>
-                <input type="email" defaultValue={this.state.user} placeholder="email" />
-                <input type="password" defaultValue={this.state.pass} placeholder="password" />
+                <view-input type="email" value={this.state.user} placeholder="email/username" required />
+                <view-input type="password" value={this.state.pass} placeholder="password" required />
             </form>
             <button className="resolve" onClick={this.submit.bind(this)}>submit</button>
             <button className="reject" onClick={this.cancel.bind(this)}>cancel</button>

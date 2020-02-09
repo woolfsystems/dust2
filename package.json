@@ -5,8 +5,8 @@
   "main": "core/broker/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "parcel:build": "echo \"Building './${npm_package_alias_frontends}/${npm_package_alias_admin}/index.html' => '${npm_package_alias_build}/${npm_package_alias_admin}'\" && npx parcel build ./${npm_package_alias_frontends}/${npm_package_alias_admin}/index.html -d ./${npm_package_alias_build}/${npm_package_alias_admin}",
-    "parcel:watch": "echo \"Watching './${npm_package_alias_frontends}/${npm_package_alias_admin}/index.html' => '${npm_package_alias_build}/${npm_package_alias_admin}'\" && npx parcel watch ./${npm_package_alias_frontends}/${npm_package_alias_admin}/index.html -d ./${npm_package_alias_build}/${npm_package_alias_admin}",
+    "parcel:build": "echo \"Building './${npm_package_alias_frontends}/${npm_package_alias_admin}/index.html' => '${npm_package_alias_build}/${npm_package_alias_admin}'\" && npx parcel build ./${npm_package_alias_frontends}/${npm_package_alias_admin}/*.html -d ./${npm_package_alias_build}/${npm_package_alias_admin}",
+    "parcel:watch": "echo \"Watching './${npm_package_alias_frontends}/${npm_package_alias_admin}/index.html' => '${npm_package_alias_build}/${npm_package_alias_admin}'\" && npx parcel watch ./${npm_package_alias_frontends}/${npm_package_alias_admin}/*.html -d ./${npm_package_alias_build}/${npm_package_alias_admin}",
     "clean:frontend": "echo \"Cleaning './${npm_package_alias_build}/${npm_package_alias_admin}'\" && rm -rf ./${npm_package_alias_build}/${npm_package_alias_admin}/* || mkdir -p ./${npm_package_alias_build}/${npm_package_alias_admin}",
     "watch:frontend": "npm run parcel:watch",
     "build:frontend": "npm run clean:frontend && npm run parcel:build",
