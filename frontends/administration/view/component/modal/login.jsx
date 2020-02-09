@@ -30,25 +30,25 @@ export default class extends React.Component {
         }
     }
 
-    static getDerivedStateFromProps(props, state){
+    static getDerivedStateFromProps(props, state) {
         console.log(props)
         return Object.assign(
             state,
             props
         )
     }
-    message(...args){
-        return this.props.channel.postMessage(JSON.stringify(args))
+    message(_status, _data=null) {
+        return this.props.channel.postMessage(JSON.stringify([_status, _data]))
     }
 
-    submit(_e){
-        this.message('resolve', LOGIN_OK)
+    resolve(_e) {
+        this.message('resolve')
     }
-    cancel(){
+    reject() {
         this.message('reject', LOGIN_REJECTED)    
     }
 
-    render(){
+    render() {
         return (
         <fieldset className="modal--content types--modal--login">
             <h2>login</h2>
@@ -57,8 +57,8 @@ export default class extends React.Component {
                 <view-input type="email" value={this.state.user} placeholder="email/username" required />
                 <view-input type="password" value={this.state.pass} placeholder="password" required />
             </form>
-            <button className="resolve" onClick={this.submit.bind(this)}>submit</button>
-            <button className="reject" onClick={this.cancel.bind(this)}>cancel</button>
+            <button className="resolve" onClick={this.resolve.bind(this)}>submit</button>
+            <button className="reject" onClick={this.reject.bind(this)}>cancel</button>
         </fieldset>)
     }
 }

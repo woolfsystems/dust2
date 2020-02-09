@@ -17,7 +17,16 @@ const routes = [
     ['Journal', '/journal', JournalView],
     ['Nodes', '/nodes', NodesView],
     ['Services', '/services', ServicesView],
-    ['Roles', '/roles', RolesView]
+    ['Roles', '/roles', RolesView],
+    ['Login', {
+        key: 'login',
+        state: {
+            modal: {
+                show: true,
+                view:'login'
+            }
+        }
+    }, RootView]
 ]
 
 class Router extends React.Component{
@@ -44,7 +53,6 @@ class Router extends React.Component{
         let {url} = props
         let _lookup = routes.find(([,_url]) =>
                 url === (_url.pathname || _url))
-        console.log('STATE',props.state || 'ns')
         return typeof _lookup !== 'undefined'
             ? {
                 url: url,

@@ -24,7 +24,7 @@ export default class extends React.Component {
         }
     }
     static getDerivedStateFromProps(props, state){
-        if(typeof props.location.state.modal!=='undefined' && props.location.state.modal.show)
+        if(props.location.state && typeof props.location.state.modal!=='undefined' && props.location.state.modal.show)
             return {
                 visible: true,
                 component: modals[props.location.state.modal.view].default,
@@ -39,7 +39,7 @@ export default class extends React.Component {
             ? this.state.component
             : ()=>(<div></div>)
         return (
-        <view-layer id="modal" class={this.state.visible && 'visible'}>
+        <view-layer id="modal" {...(this.state.visible && {class: 'visible'})}>
             <ModalPromise channel={this.state.channel} />
         </view-layer>)
     }

@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 
 import { Route, Router, BrowserRouter } from 'react-router-dom'
 
-import { createBrowserHistory } from "history";
+import { createBrowserHistory } from 'history'
+import quasi from 'quasi-svg/svg'
 
 import 'setimmediate'
 
@@ -80,7 +81,7 @@ export default class extends React.Component {
     call(_call, _meta) {
         return authWrapper(socketCall(_call, _meta), this.socket, this.attemptLogin.bind(this))
     }
-    connectIO(){
+    connectIO() {
         try{
             this.socket = io('localhost:4000', {
                 reconnection: true,
@@ -140,7 +141,7 @@ export default class extends React.Component {
         }
         
     }
-    setupIO(){
+    setupIO() {
         this.socket.on('connect', () => {
             console.log('[WS]', 'connected')
             
@@ -157,7 +158,7 @@ export default class extends React.Component {
             // })
         })
     }
-    showLogin(){
+    showLogin() {
         console.info('[MODAL]','show')
         return new Promise((resolve, reject) => {
             let _cid = 'ch_'+(loop++)
@@ -181,16 +182,18 @@ export default class extends React.Component {
             })
         })
     }
-    hideLogin(){
+    hideLogin() {
         console.info('[MODAL]','hide')
-        this.state.history.push({
-            state: {
-                modal: { show: false }
-            }
-        })
+        this.state.history.replace(Object.assign({},
+            this.state.history.location,
+            {
+                state: {
+                    modal: { show: false }
+                }
+            }))
     return true
     }
-    attemptLogin(){
+    attemptLogin() {
         return new Promise((resolve, reject) =>
             this.showLogin()
                 .then(_v =>

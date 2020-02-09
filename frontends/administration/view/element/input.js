@@ -47,7 +47,7 @@ class ViewInput extends HTMLElement {
                 font-size: 0.5em;
                 position: absolute;
                 right: 0;
-                bottom: 0.5em;
+                bottom: -1.6em !important;
                 text-transform: lowercase;
             }
             .wrapper > input {
