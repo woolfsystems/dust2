@@ -3,8 +3,9 @@ import { Route, Switch } from 'react-router-dom'
 
 import '~/assets/style/layout/content.scss'
 
-import { Router, routes } from '~/routes.js'
+import { Router, routes } from '~/logic/routes.js'
 import MenuList from '~/view/component/menulist.jsx'
+import Quasi from '~/view/component/quasi.jsx'
 
 const Rar = ({location}) => (<Router url={location.pathname} state={location.state} />)
 
@@ -23,7 +24,7 @@ export default class extends React.Component {
         return (
         <view-layer id="content">
             <hgroup>
-                <h1>dust</h1>
+                <h1>dust<span>cast</span></h1>
                 <MenuList items={routes} />
             </hgroup>
             <section id="content">

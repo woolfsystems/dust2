@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { Route, Router, BrowserRouter } from 'react-router-dom'
 
 import { createBrowserHistory } from 'history'
-import quasi from 'quasi-svg/svg'
 
 import 'setimmediate'
 
@@ -21,8 +20,18 @@ import CallStore from '~/lib/filter'
 import CoreView from '~/view/layout/content.jsx'
 import ModalView from '~/view/layout/modal.jsx'
 
-import LoginModal from '~/view/component/modal/login.jsx'
+import { createManagedSvgPatternLibrary } from 'react-svg-patterns'
+ 
 
+// const {
+//   ManagedSvgPatternLibrary,
+//   registerSvgPattern,
+// } = createManagedSvgPatternLibrary()
+//  //const quasiFill = registerSvgPattern('myGradient', 'custom',{children: l})
+// const quasiFill = registerSvgPattern('myGradient', 'linear', {
+//     angle: 30,
+//     stops: ['#f00', '#0f0', '#00f',],
+//  });
 let loop = 1
 
 const init = {
@@ -204,12 +213,16 @@ export default class extends React.Component {
     componentDidMount() {
         this.connectIO()
         this.setupIO()
+        // let svgBack = document.createElement('div')
+        // svgBack.innerHTML = quasi({color: true, skinnyMidpoint: 2, fatMidpoint: 1})
+        // document.body.appendChild(svgBack)
     }
     render(){
-        return (
-        <Router history={this.state.history}>
-            <Route component={ModalView} />
-            <CoreView />
-        </Router>)
+        return (<>
+            <Router history={this.state.history}>
+                <Route component={ModalView} />
+                <CoreView />
+            </Router>
+        </>)
     }
 }

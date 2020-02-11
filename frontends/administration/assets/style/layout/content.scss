@@ -1,5 +1,6 @@
 body {
     & > main > view-layer#content {
+        position: relative;
         display: grid;
         grid:
             "heading" min-content
@@ -13,14 +14,22 @@ body {
         background-color: #f7f4fd;
         padding: 0.5em 1em;
         box-shadow: 0 0 8px -2px black;
+        & > .svg--background {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
 
-        &> hgroup {
+        & > hgroup {
             grid-area: heading;
-            &> h1 {
+            & > h1 {
                 position: sticky;
                 top: 0.2em;
+                & > span {
+                    color: #888;
+                }
             }
-            &> ol {
+            & > ol {
                 background: linear-gradient(180deg, #f7f4fd00 0%, #f7f4fdff 100%);
                 position: relative;
                 margin-top: -1em;
@@ -30,13 +39,13 @@ body {
                 text-transform: lowercase;
             }
         }
-        &> section {
+        & > section {
             display: grid;
             grid: auto-flow min-content / auto;
             grid-area: content;
             grid-gap: 0.5em;
             
-            &> section {
+            & > section {
                 position: relative;    
                 legend {
                     top: 1em;

@@ -5,6 +5,11 @@
 body {
     background-color: #eee;
     color: #111;
+    opacity: 1;
+    transition: opacity 1s ease;
+}
+body[loading]{
+    opacity: 0;
 }
 
 .transparent {
