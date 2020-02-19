@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 
 import '~/assets/style/layout/content.scss'
 
-import { Router, routes } from '~/logic/routes.js'
+import { Router, routes } from '~/src/routes.js'
 import MenuList from '~/view/component/menulist.jsx'
 import Quasi from '~/view/component/quasi.jsx'
 

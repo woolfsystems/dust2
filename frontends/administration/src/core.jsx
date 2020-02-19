@@ -21,6 +21,7 @@ import CoreView from '~/view/layout/content.jsx'
 import ModalView from '~/view/layout/modal.jsx'
 
 import { createManagedSvgPatternLibrary } from 'react-svg-patterns'
+import { AuthenticationRejected } from '../lib/errors'
  
 
 // const {
@@ -153,12 +154,15 @@ export default class extends React.Component {
     setupIO() {
         this.socket.on('connect', () => {
             console.log('[WS]', 'connected')
-            
-            this.call('postcode.lookup', { postcode:'nw', token: 'bloopsssssss' })().then(r => {
-                console.log('=>','[call]', r)
-            }).catch(e => {
-                console.error('=>','[call]', e)
-            })
+            try{
+                this.call('postcode.lookup', { postcode:'nw', token: 'bloopsssssss' })().then(_r => {
+                    console.log('=>','[call]', _r)
+                }).catch(_e => {
+                    console.error('=>','[call]', _e)
+                })
+            }catch(_e){
+                console.log('[CALL]',_e)
+            }
     
             // this.call('postcode.lookup', { postcode:'nw2', token: 'bloopsssssss' })().then(r => {
             //     console.log('=>','[call 2]', r)
@@ -177,8 +181,10 @@ export default class extends React.Component {
                 _c.close()
                 if(_status === 'resolve')
                     resolve(_data)
-                else
-                    reject(_data)
+                else{
+                    reject(new AuthenticationRejected('User chose not to login'))
+                }
+                    
             }
             this.state.history.push({
                 state: {
@@ -205,10 +211,14 @@ export default class extends React.Component {
     attemptLogin() {
         return new Promise((resolve, reject) =>
             this.showLogin()
-                .then(_v =>
-                    this.hideLogin() && resolve(_v))
-                .catch(_e =>
-                    this.hideLogin() && reject(_e)))
+                .then(_v => {
+                    this.hideLogin()
+                    resolve(_v)
+                })
+                .catch(_e => {
+                    this.hideLogin()
+                    reject(_e)
+                }))
     }
     componentDidMount() {
         this.connectIO()

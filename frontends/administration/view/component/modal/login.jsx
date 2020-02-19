@@ -4,8 +4,10 @@ import PropTypes from 'prop-types'
 import "~/assets/style/component/modal/login.scss"
 
 import {
+    AuthenticationRejected,
     AuthenticationError,
     ApplicationError,
+    ConnectionError,
     ServiceError,
     APIError,
 
@@ -45,7 +47,7 @@ export default class extends React.Component {
         this.message('resolve')
     }
     reject() {
-        this.message('reject', LOGIN_REJECTED)    
+        this.message('reject')    
     }
 
     render() {

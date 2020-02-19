@@ -1,6 +1,9 @@
+import { Promise } from 'bluebird'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Core from '~/logic/core.jsx'
+import Core from '~/src/core.jsx'
+
+global.Promise=Promise
 
 ReactDOM.render(
     <Core />,
